@@ -1,4 +1,4 @@
-# AgentKeeper landing page
+# Cardea landing page
 
 A static site built with Tailwind CSS v4 and HTMX. It needs no framework and no server-side code.
 
@@ -31,15 +31,16 @@ Deploy the `public/` directory to any static host.
 
 ## Sovereignty by construction
 
-Fonts (Inter, JetBrains Mono) and htmx are vendored from npm into `public/assets/`.
-The page loads nothing from third-party origins and sets no cookies. Keep it that way:
-no Google Fonts, CDNs or analytics snippets.
+Fonts (Inter, Cormorant SC, JetBrains Mono) and htmx are vendored from npm into `public/assets/`.
+The page loads nothing from third-party origins and sets no cookies. The only outbound request
+is the pilot form, and only when a visitor submits it. Keep it that way: no Google Fonts, CDNs
+or analytics snippets.
 
 ## Themes
 
 The page follows the system setting (dark by default, light under `prefers-color-scheme: light`).
 A three-state toggle in the header (light · system · dark) overrides it via `html[data-theme]`;
-the choice is kept in `localStorage` (`ak-theme`) and applied by an inline script before first paint.
+the choice is kept in `localStorage` (`cardea-theme`) and applied by an inline script before first paint.
 All colours are tokens in `src/input.css`; the light values live in one `@media` block there.
 SVG diagrams use hex colours in their markup, and CSS rules in the same file map each hex to a
 token so they switch too. Headings use `text-ink-50`, not `text-white`, for the same reason.
@@ -57,8 +58,6 @@ The platform window and the session trace show sample data. The live records are
 
 ## To wire up before launch
 
-- **Pilot form**: posts to `/api/pilot` via `hx-post`. Until an endpoint exists, a failed
-  post shows a `mailto:` fallback. The endpoint should return an HTML fragment, which is
-  swapped into `#pilot-result`.
-- **Contact address**: `hello@agentkeeper.eu` is a placeholder. It appears in `index.html`
-  (footer) and `site.js` (`FALLBACK_EMAIL`).
+- **Pilot form**: posts to [Web3Forms](https://web3forms.com), which emails `contact@cardeahq.com`.
+  The access key in `index.html` is tied to that address
+  (the key is public by design). If the post fails, `site.js` shows a `mailto:` fallback.

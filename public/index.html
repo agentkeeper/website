@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AgentKeeper — Governance for AI agents</title>
-  <meta name="description" content="AgentKeeper is the security, privacy and observability layer for AI agents. It governs what agents do with tools, files and credentials, and runs on your infrastructure or in the EU.">
+  <title>Cardea — Governance for AI agents</title>
+  <meta name="description" content="Cardea is the security, privacy and observability layer for AI agents. It governs what agents do with tools, files and credentials, and runs on your infrastructure or in the EU.">
   <meta name="theme-color" content="#1e293b" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="assets/css/site.css">
   <script>
     // Apply a saved theme choice before first paint.
-    try { const t = localStorage.getItem("ak-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
+    try { const t = localStorage.getItem("cardea-theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
   </script>
   <script src="assets/js/htmx.min.js" defer></script>
   <script src="assets/js/site.js" defer></script>
@@ -23,7 +23,7 @@
 <div class="border-b border-keeper-700/50 bg-keeper-900/70">
   <p class="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-3 gap-y-1 px-4 py-2 text-center text-xs text-ink-200 sm:px-6">
     <span class="badge border-keeper-400/40 bg-keeper-400/15 text-keeper-300">coming soon</span>
-    <span>AgentKeeper is a working name and this site is a preview. The name, domain and details may change before launch.</span>
+    <span>Cardea is in early access and this site is a preview. Details may change before launch.</span>
   </p>
 </div>
 
@@ -32,7 +32,7 @@
   <nav class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6" aria-label="Main">
     <a href="#top" class="flex items-center gap-2.5">
       <img src="assets/logo.svg" alt="" class="size-7">
-      <span class="hidden font-semibold tracking-tight text-ink-50 min-[400px]:inline">AgentKeeper</span>
+      <span class="wordmark hidden min-[400px]:inline">Cardea</span>
     </a>
     <div class="hidden items-center gap-7 text-sm text-ink-300 md:flex">
       <a href="#problem" class="hover:text-ink-50">Problem</a>
@@ -72,13 +72,14 @@
       </div>
       <div>
         <p class="text-lg/8 text-ink-300 text-pretty">
-          AgentKeeper sits between your agents and the models they call. It identifies every agent, records every
+          Cardea sits between your agents and the models they call. It identifies every agent, records every
           tool call, and stops risky calls before they leave your network.
         </p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href="#pilot" class="btn-primary">Start a 30-day pilot <span aria-hidden="true">→</span></a>
           <a href="#platform" class="btn-ghost">See the platform</a>
         </div>
+        <p class="motto mt-8 text-xs" title="Ovid on Cardea, Roman goddess of doors">Opens what is shut · Shuts what is open</p>
       </div>
     </div>
 
@@ -90,7 +91,7 @@
       </div>
       <div class="p-4 sm:p-6">
 <svg id="flow" viewBox="0 0 1200 460" class="block w-full font-mono" role="img" aria-labelledby="flow-title flow-desc">
-<title id="flow-title">How AgentKeeper works</title><desc id="flow-desc">Five agents, including Claude Code, send calls to one AgentKeeper gateway, which checks every call. Allowed calls go on to Anthropic, OpenAI or DeepSeek, and their responses come back. Denied calls are stopped inside the gateway and never reach a provider.</desc>
+<title id="flow-title">How Cardea works</title><desc id="flow-desc">Five agents, including Claude Code, send calls to one Cardea gateway, which checks every call. Allowed calls go on to Anthropic, OpenAI or DeepSeek, and their responses come back. Denied calls are stopped inside the gateway and never reach a provider.</desc>
 <g fill="none" stroke-width="1.25">
 <path id="fin0" d="M232 62 C 322 62, 350 222, 440 222" stroke="#4b5a70" stroke-opacity="1"/>
 <path id="fin1" d="M232 146 C 322 146, 350 222, 440 222" stroke="#4b5a70" stroke-opacity="1"/>
@@ -112,8 +113,8 @@
 </g>
 <g>
 <rect x="440" y="122" width="320" height="220" rx="12" fill="#134e4a" fill-opacity=".28" stroke="#2dd4bf" stroke-opacity=".8"/>
-<path d="M466 144 l11 4.2 v9.3 c0 6.2 -4.9 10.3 -11 13.5 c-6.1 -3.2 -11 -7.3 -11 -13.5 v-9.3 z" fill="#2dd4bf"/>
-<text x="490" y="156" fill="#ffffff" font-size="15" font-weight="500" font-family="Inter, sans-serif">AgentKeeper Gateway</text>
+<path d="M455 171 V155 A11 11 0 0 1 477 155 V171 Z" fill="#2dd4bf"/><path d="M458.5 171 V155 C458.5 151 461 148 465 147 V168 Z" fill="#134e4a"/>
+<text x="490" y="156" fill="#ffffff" font-size="15" font-weight="500" font-family="Inter, sans-serif">Cardea Gateway</text>
 <text x="490" y="172" fill="#9aa7b8" font-size="10.5">one endpoint · keys held here</text>
 <text x="744" y="140" fill="#4ade80" font-size="9.5" text-anchor="end">● fail-closed</text>
 <g class="fl-cell" data-stage="0"><rect x="448" y="204" width="44" height="36" rx="5"/><text x="470" y="227" text-anchor="middle" font-size="12" class="fl-x">✕</text></g>
@@ -182,7 +183,7 @@
       </article>
     </div>
 
-    <!-- Sandbox vs AgentKeeper -->
+    <!-- Sandbox vs Cardea -->
     <div class="panel mt-5 overflow-hidden">
       <div class="grid grid-cols-1 md:grid-cols-2">
         <div class="border-b border-ink-700 p-7 md:border-r md:border-b-0">
@@ -195,7 +196,7 @@
           </ul>
         </div>
         <div class="bg-keeper-900/20 p-7">
-          <p class="font-mono text-xs text-keeper-400">agentkeeper → protects the system and data</p>
+          <p class="font-mono text-xs text-keeper-400">cardea → protects the system and data</p>
           <ul class="mt-4 space-y-2 font-mono text-sm text-ink-100">
             <li><span class="text-keeper-400">✓</span> anonymous callers</li>
             <li><span class="text-keeper-400">✓</span> calls to models or tools it may not use</li>
@@ -206,7 +207,7 @@
         </div>
       </div>
       <p class="border-t border-ink-700 px-7 py-4 text-sm text-ink-400">
-        You need both. AgentKeeper does not replace your sandbox; it works with whichever one you already run.
+        You need both. Cardea does not replace your sandbox; it works with whichever one you already run.
       </p>
     </div>
   </div>
@@ -269,7 +270,7 @@
 
     <!-- Guarantees -->
     <ul class="mt-5 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-ink-700 bg-ink-700 text-sm/6 sm:grid-cols-2 lg:grid-cols-4">
-      <li class="bg-ink-900 p-6"><p class="font-medium text-ink-50">Fails safe</p><p class="mt-2 text-ink-300">If something goes wrong inside AgentKeeper, calls are blocked, never waved through.</p></li>
+      <li class="bg-ink-900 p-6"><p class="font-medium text-ink-50">Fails safe</p><p class="mt-2 text-ink-300">If something goes wrong inside Cardea, calls are blocked, never waved through.</p></li>
       <li class="bg-ink-900 p-6"><p class="font-medium text-ink-50">Keeps your keys</p><p class="mt-2 text-ink-300">Agents never hold your model provider keys, so they have none to leak.</p></li>
       <li class="bg-ink-900 p-6"><p class="font-medium text-ink-50">Discreet refusals</p><p class="mt-2 text-ink-300">A refused caller gets a clear answer, not a map of your rules. The details go to your team.</p></li>
       <li class="bg-ink-900 p-6"><p class="font-medium text-ink-50">Invisible when allowed</p><p class="mt-2 text-ink-300">Allowed calls work exactly as before, with no noticeable delay.</p></li>
@@ -304,7 +305,7 @@
           </div>
           <div class="mx-auto flex items-center gap-2 rounded bg-ink-950 px-3 py-1 font-mono text-[11px] text-ink-400">
             <svg viewBox="0 0 16 16" class="size-3 fill-ink-500" aria-hidden="true"><path d="M5 7V5a3 3 0 1 1 6 0v2h1v7H4V7h1Zm1.5 0h3V5a1.5 1.5 0 0 0-3 0v2Z"/></svg>
-            app.agentkeeper.eu / acme-health / production
+            app.cardeahq.com / acme-health / production
           </div>
           <span class="hidden font-mono text-[10px] tracking-widest text-ink-500 uppercase sm:block">sample data</span>
         </div>
@@ -315,7 +316,7 @@
             <aside class="w-48 shrink-0 border-r border-ink-700 bg-ink-900 p-3">
               <div class="flex items-center gap-2 px-2 py-1.5">
                 <img src="assets/logo.svg" alt="" class="size-5">
-                <span class="text-sm font-semibold text-ink-50">AgentKeeper</span>
+                <span class="text-sm font-semibold text-ink-50">Cardea</span>
               </div>
               <p class="mt-5 px-2 font-mono text-[10px] tracking-widest text-ink-500 uppercase">Observe</p>
               <nav role="tablist" aria-label="Platform views" class="mt-2 space-y-0.5 text-[13px]">
@@ -349,7 +350,7 @@
         </div>
       </div>
       <p class="mt-4 text-center font-mono text-[11px] text-ink-500">
-        The AgentKeeper platform, shown with sample data.
+        The Cardea platform, shown with sample data.
       </p>
     </div>
   </div>
@@ -461,7 +462,7 @@
     <p class="eyebrow">05 — Adoption</p>
     <h2 class="section-title max-w-3xl">Change one URL. Your agents keep working.</h2>
     <p class="section-lead">
-      Point your agents at AgentKeeper instead of the model provider. There's no SDK to add and no agent code to change.
+      Point your agents at Cardea instead of the model provider. There's no SDK to add and no agent code to change.
       Claude Code, opencode and any Anthropic SDK work as they are.
     </p>
 
@@ -469,7 +470,7 @@
       <li class="bg-ink-900 p-7">
         <span class="font-mono text-sm text-keeper-400">step 1</span>
         <h3 class="mt-3 font-semibold text-ink-50">Run the gateway</h3>
-        <p class="mt-2 text-sm/6 text-ink-300">In your cloud, on-prem or next to the agent, or use our EU-hosted service. Your provider keys stay with AgentKeeper.</p>
+        <p class="mt-2 text-sm/6 text-ink-300">In your cloud, on-prem or next to the agent, or use our EU-hosted service. Your provider keys stay with Cardea.</p>
       </li>
       <li class="bg-ink-900 p-7">
         <span class="font-mono text-sm text-keeper-400">step 2</span>
@@ -479,7 +480,7 @@
       <li class="bg-ink-900 p-7">
         <span class="font-mono text-sm text-keeper-400">step 3</span>
         <h3 class="mt-3 font-semibold text-ink-50">Point your agents at it</h3>
-        <p class="mt-2 text-sm/6 text-ink-300">Point your agents at AgentKeeper. From then on, every call and every tool they use is identified and traced.</p>
+        <p class="mt-2 text-sm/6 text-ink-300">Point your agents at Cardea. From then on, every call and every tool they use is identified and traced.</p>
       </li>
     </ol>
 
@@ -523,7 +524,7 @@
         <h2 class="section-title">Your agents, your infrastructure, your jurisdiction.</h2>
         <p class="section-lead">
           Governance should not require sending your traffic to yet another third party.
-          AgentKeeper is designed so that you choose where the data goes, and it stays there.
+          Cardea is designed so that you choose where the data goes, and it stays there.
         </p>
       </div>
       <div class="grid grid-cols-1 gap-px self-end overflow-hidden rounded-lg border border-ink-700 bg-ink-700 sm:grid-cols-2">
@@ -535,7 +536,7 @@
         <div class="bg-ink-900 p-6">
           <p class="font-mono text-xs text-ink-500">intercept</p>
           <p class="mt-2 font-medium text-ink-50">No TLS interception</p>
-          <p class="mt-2 text-sm/6 text-ink-400">Agents route to AgentKeeper explicitly. We do not spoof DNS or decrypt traffic; that approach is a GDPR grey area and we avoid it.</p>
+          <p class="mt-2 text-sm/6 text-ink-400">Agents route to Cardea explicitly. We do not spoof DNS or decrypt traffic; that approach is a GDPR grey area and we avoid it.</p>
         </div>
         <div class="bg-ink-900 p-6">
           <p class="font-mono text-xs text-ink-500">standards</p>
@@ -545,7 +546,7 @@
         <div class="bg-ink-900 p-6">
           <p class="font-mono text-xs text-ink-500">minimise</p>
           <p class="mt-2 font-medium text-ink-50">Data minimisation by default</p>
-          <p class="mt-2 text-sm/6 text-ink-400">Traces hold metadata only, never payload content. This page itself makes no third-party requests.</p>
+          <p class="mt-2 text-sm/6 text-ink-400">Traces hold metadata only, never payload content. This page itself makes no third-party requests, except the pilot form when you submit it.</p>
         </div>
       </div>
     </div>
@@ -560,7 +561,7 @@
           <tr class="border-b border-ink-700">
             <th scope="col" class="px-6 py-3 font-normal">Framework</th>
             <th scope="col" class="px-6 py-3 font-normal">What it asks for</th>
-            <th scope="col" class="px-6 py-3 font-normal">What AgentKeeper records or enforces</th>
+            <th scope="col" class="px-6 py-3 font-normal">What Cardea records or enforces</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-ink-800">
@@ -587,7 +588,7 @@
         </tbody>
       </table>
       <p class="border-t border-ink-700 px-6 py-3 text-xs text-ink-500">
-        AgentKeeper supplies evidence and controls. It does not make a system compliant by itself; compliance is still a property of your whole organisation.
+        Cardea supplies evidence and controls. It does not make a system compliant by itself; compliance is still a property of your whole organisation.
       </p>
     </div>
   </div>
@@ -597,14 +598,14 @@
 <section class="border-b border-ink-800 bg-ink-900/40">
   <div class="mx-auto grid grid-cols-1 max-w-6xl gap-14 px-4 py-24 sm:px-6 lg:grid-cols-2">
     <div>
-      <p class="eyebrow">07 — Why AgentKeeper</p>
+      <p class="eyebrow">07 — Why Cardea</p>
       <h2 class="section-title">Security is the product, not the upsell.</h2>
       <ol class="mt-10 space-y-8">
         <li class="flex gap-5">
           <span class="w-8 shrink-0 font-mono text-sm text-keeper-400">i.</span>
           <div>
             <h3 class="font-semibold text-ink-50">Governs actions, not only model calls</h3>
-            <p class="mt-2 text-sm/6 text-ink-300">LLM gateways control access to the model: routing, spend and rate limits. AgentKeeper also sees what the agent does with the tools, files and credentials it has been given.</p>
+            <p class="mt-2 text-sm/6 text-ink-300">LLM gateways control access to the model: routing, spend and rate limits. Cardea also sees what the agent does with the tools, files and credentials it has been given.</p>
           </div>
         </li>
         <li class="flex gap-5">
@@ -624,7 +625,7 @@
       </ol>
     </div>
     <div class="panel self-start p-7">
-      <h3 class="font-mono text-xs tracking-widest text-ink-400 uppercase">What AgentKeeper is not</h3>
+      <h3 class="font-mono text-xs tracking-widest text-ink-400 uppercase">What Cardea is not</h3>
       <dl class="mt-6 divide-y divide-ink-800 text-sm">
         <div class="flex justify-between gap-6 py-3"><dt class="text-ink-100">A multi-provider LLM router</dt><dd class="text-right font-mono text-xs text-ink-500">see LiteLLM, OpenRouter</dd></div>
         <div class="flex justify-between gap-6 py-3"><dt class="text-ink-100">A sandbox</dt><dd class="text-right font-mono text-xs text-ink-500">use Docker, gVisor, Firecracker</dd></div>
@@ -666,8 +667,12 @@
     </div>
 
     <div class="panel p-7">
-      <form hx-post="/api/pilot" hx-target="#pilot-result" hx-swap="innerHTML" hx-disabled-elt="find button"
-            class="space-y-5" id="pilot-form">
+      <form action="https://api.web3forms.com/submit" method="post" class="space-y-5" id="pilot-form">
+        <!-- Web3Forms delivers submissions to contact@cardeahq.com; the key is public by design. -->
+        <input type="hidden" name="access_key" value="02e21ad5-fab9-4d67-828c-ed93c663966e">
+        <input type="hidden" name="subject" value="Cardea pilot request">
+        <input type="hidden" name="from_name" value="cardeahq.com">
+        <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off">
         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <label class="block text-sm text-ink-200">Name
             <input name="name" required autocomplete="name" class="field">
@@ -689,14 +694,14 @@
             <option>Other</option>
           </select>
         </label>
-        <label class="block text-sm text-ink-200">Which agents would you put behind AgentKeeper?
+        <label class="block text-sm text-ink-200">Which agents would you put behind Cardea?
           <textarea name="context" rows="3" class="field" placeholder="e.g. Claude Code across 40 engineers, with access to our monorepo"></textarea>
         </label>
         <div class="flex flex-wrap items-center justify-between gap-4 pt-1">
           <p class="max-w-xs text-xs/5 text-ink-500">We use this only to reply to you. No newsletter, no resale.</p>
           <button type="submit" class="btn-primary disabled:opacity-60">
             Request a pilot
-            <span class="htmx-indicator font-mono text-xs">…</span>
+            <span class="pilot-sending hidden font-mono text-xs">…</span>
           </button>
         </div>
         <div id="pilot-result" aria-live="polite"></div>
@@ -713,9 +718,13 @@
     <div class="max-w-sm">
       <div class="flex items-center gap-2.5">
         <img src="assets/logo.svg" alt="" class="size-6">
-        <span class="font-semibold text-ink-50">AgentKeeper</span>
+        <span class="wordmark">Cardea</span>
       </div>
       <p class="mt-4 text-sm/6 text-ink-400">Security, privacy and observability for AI agents. Built in Europe.</p>
+      <figure class="mt-6 border-l-2 border-keeper-700 pl-4">
+        <blockquote lang="la" class="motto">numine clausa aperit, claudit aperta suo</blockquote>
+        <figcaption class="mt-2 text-xs/5 text-ink-500">“By her power she opens what is shut, and shuts what is open.” Ovid on Cardea, Roman goddess of the door and its hinge. <cite class="not-italic">Fasti VI</cite></figcaption>
+      </figure>
     </div>
     <div class="grid grid-cols-2 gap-10 text-sm sm:grid-cols-3">
       <div>
@@ -737,15 +746,15 @@
         <p class="font-mono text-xs text-ink-500">contact</p>
         <ul class="mt-3 space-y-2 text-ink-300">
           <li><a href="#pilot" class="hover:text-ink-50">Request a pilot</a></li>
-          <li><a href="mailto:hello@agentkeeper.eu" class="hover:text-ink-50">hello@agentkeeper.eu</a></li>
+          <li><a href="mailto:contact@cardeahq.com" class="hover:text-ink-50">contact@cardeahq.com</a></li>
         </ul>
       </div>
     </div>
   </div>
   <div class="border-t border-ink-800">
     <div class="mx-auto flex max-w-6xl flex-wrap justify-between gap-3 px-4 py-5 font-mono text-[11px] text-ink-500 sm:px-6">
-      <span>© 2026 AgentKeeper · working name, site preview</span>
-      <span>no cookies · no trackers · no third-party requests</span>
+      <span>© 2026 Cardea · cardeahq.com · site preview</span>
+      <span>no cookies · no trackers · no third-party requests until you submit the form</span>
     </div>
   </div>
 </footer>

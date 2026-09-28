@@ -1,11 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="680" height="680" viewBox="0 0 680 680" role="img" aria-label="AgentKeeper">
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="680" viewBox="0 0 680 680" role="img" aria-label="Cardea">
   <rect width="680" height="680" rx="96" fill="#1c2530"/>
-  <path d="M340 120 L500 180 V330 C500 430 430 500 340 555 C250 500 180 430 180 330 V180 Z" fill="#2dd4bf"/>
-  <path d="M340 150 L472 200 V328 C472 415 412 476 340 522 C268 476 208 415 208 328 V200 Z" fill="#17766c"/>
-  <rect x="332" y="222" width="16" height="30" fill="#f4f6f5"/>
-  <circle cx="340" cy="214" r="10" fill="#f4f6f5"/>
-  <rect x="272" y="252" width="136" height="112" rx="22" fill="#f4f6f5"/>
-  <circle cx="312" cy="308" r="12" fill="#17766c"/>
-  <circle cx="368" cy="308" r="12" fill="#17766c"/>
-  <rect x="304" y="336" width="72" height="10" rx="5" fill="#17766c"/>
+  <path d="M190 540 V310 A150 150 0 0 1 490 310 V540 Z" fill="#2dd4bf"/>
+  <path d="M236 540 V310 A104 104 0 0 1 444 310 V540 Z" fill="#f4f6f5"/>
+  <path d="M340 206 C304 206 290 236 292 272 C292 298 284 316 262 334 C254 342 252 356 252 372 L256 540 H424 L428 372 C428 356 426 342 418 334 C396 316 388 298 388 272 C390 236 376 206 340 206 Z" fill="#17766c"/>
+  <path d="M340 238 C320 238 310 254 310 276 C310 300 324 316 340 316 C356 316 370 300 370 276 C370 254 360 238 340 238 Z" fill="#f4f6f5"/>
+  <path d="M312 262 C318 244 330 238 340 238 C350 238 362 244 368 262 C358 252 350 250 340 250 C330 250 322 252 312 262 Z" fill="#134e4a"/>
+  <path d="M308 248 Q326 238 340 222 Q354 238 372 248 L366 256 Q340 240 314 256 Z" fill="#7ee8d8"/>
+  <path d="M276 360 C284 420 282 490 278 540 M404 360 C396 420 398 490 402 540" stroke="#1fae9c" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <circle cx="340" cy="378" r="17" fill="none" stroke="#7ee8d8" stroke-width="9"/>
+  <path d="M340 395 V476 M340 452 H360 M340 468 H356" stroke="#7ee8d8" stroke-width="9" stroke-linecap="round"/>
+  <path d="M318 146 H362 L354 200 H326 Z" fill="#7ee8d8"/>
+  <rect x="164" y="540" width="352" height="26" rx="6" fill="#2dd4bf"/>
 </svg>

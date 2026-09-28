@@ -18,11 +18,11 @@
       r.setAttribute("aria-checked", String(on));
       r.tabIndex = on ? 0 : -1;
     });
-    if (save) try { mode === "system" ? localStorage.removeItem("ak-theme") : localStorage.setItem("ak-theme", mode); } catch {}
+    if (save) try { mode === "system" ? localStorage.removeItem("cardea-theme") : localStorage.setItem("cardea-theme", mode); } catch {}
   }
 
   let initial = "system";
-  try { initial = localStorage.getItem("ak-theme") || "system"; } catch {}
+  try { initial = localStorage.getItem("cardea-theme") || "system"; } catch {}
   apply(["light", "system", "dark"].includes(initial) ? initial : "system", false);
 
   group.addEventListener("click", (e) => {
@@ -437,23 +437,48 @@ const flowSvg = document.getElementById("flow");
 if (flowSvg) initFlow(flowSvg);
 
 // ───────────────────── Pilot form ─────────────────────
-// Until a backend answers /api/pilot, fall back to email.
-const FALLBACK_EMAIL = "hello@agentkeeper.eu";
+// Posted to Web3Forms, which emails contact@cardeahq.com. On failure, offer a mailto link.
+const CONTACT_EMAIL = "contact@cardeahq.com";
+const PILOT_FIELDS = ["name", "email", "organisation", "sector", "context"];
+
+function pilotMessage(form, cls, html) {
+  form.querySelector("#pilot-result").innerHTML =
+    `<p class="rounded-md border p-3 text-sm ${cls}">${html}</p>`;
+}
 
 function pilotFallback(form) {
   const data = new FormData(form);
-  const body = [...data.entries()].map(([k, v]) => `${k}: ${v}`).join("\n");
-  const href = `mailto:${FALLBACK_EMAIL}?subject=${encodeURIComponent("AgentKeeper pilot request")}&body=${encodeURIComponent(body)}`;
-  form.querySelector("#pilot-result").innerHTML =
-    `<p class="rounded-md border border-alert/30 bg-alert/10 p-3 text-sm text-alert">
-       The form could not be sent from here.
-       <a class="underline" href="${href}">Send it by email instead</a>.
-     </p>`;
+  const body = PILOT_FIELDS.map((k) => `${k}: ${data.get(k) ?? ""}`).join("\n");
+  const href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent("Cardea pilot request")}&body=${encodeURIComponent(body)}`;
+  pilotMessage(form, "border-alert/30 bg-alert/10 text-alert",
+    `The form could not be sent from here. <a class="underline" href="${href}">Send it by email instead</a>.`);
 }
 
-document.addEventListener("htmx:responseError", (e) => {
-  if (e.detail.elt.id === "pilot-form") pilotFallback(e.detail.elt);
-});
-document.addEventListener("htmx:sendError", (e) => {
-  if (e.detail.elt.id === "pilot-form") pilotFallback(e.detail.elt);
-});
+async function submitPilot(e) {
+  e.preventDefault();
+  const form = e.currentTarget;
+  const button = form.querySelector("button[type=submit]");
+  const sending = form.querySelector(".pilot-sending");
+  button.disabled = true;
+  sending.classList.remove("hidden");
+  form.querySelector("#pilot-result").innerHTML = "";
+  try {
+    const res = await fetch(form.action, {
+      method: "POST",
+      headers: { Accept: "application/json" },
+      body: new FormData(form),
+    });
+    const json = await res.json().catch(() => ({}));
+    if (!res.ok || !json.success) throw new Error(json.message || res.statusText);
+    form.reset();
+    pilotMessage(form, "border-allow/30 bg-allow/10 text-allow",
+      "Thank you. We received your request and will get back to you shortly.");
+  } catch {
+    pilotFallback(form);
+  } finally {
+    button.disabled = false;
+    sending.classList.add("hidden");
+  }
+}
+
+document.getElementById("pilot-form")?.addEventListener("submit", submitPilot);
