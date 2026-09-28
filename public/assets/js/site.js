@@ -10,7 +10,7 @@ document.addEventListener("htmx:beforeRequest", (e) => {
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // ───────────────────── Platform preview: live records ─────────────────────
-// Sample records shaped after agentkeeper.trace/v1 (internal/trace/record.go).
+// Sample records for the design preview.
 
 const AGENTS = {
   "build-bot":     { model: "claude-opus-5",    session: "header",     tools: ["Bash", "Read", "Edit", "Grep", "Glob"] },
@@ -18,11 +18,12 @@ const AGENTS = {
   "claims-triage": { model: "claude-haiku-4-5", session: "body_field", tools: ["lookup_policy", "ocr_document", "flag_claim"] },
 };
 const STAGES = ["identification", "policies", "filtering", "rate_limiting", "tracing"];
+const STAGE_LABEL = { identification: "identify", policies: "policy", filtering: "filter", rate_limiting: "limit", tracing: "audit" };
 const DENIALS = [
   { agent: null,            stage: "identification", status: 401, message: "could not identify caller", reason: "no credential matches a registered agent" },
   { agent: "support-bot",   stage: "filtering",      status: 403, message: "request denied",            reason: "tool result contains an IBAN (get_customer)" },
   { agent: "build-bot",     stage: "filtering",      status: 403, message: "request denied",            reason: "tool result contains an AWS access key (Read .env)" },
-  { agent: "claims-triage", stage: "policies",       status: 403, message: "request denied",            reason: "claims.rego:18: model not allowed for agent" },
+  { agent: "claims-triage", stage: "policies",       status: 403, message: "request denied",            reason: "claims policy: model not allowed for this agent" },
   { agent: "build-bot",     stage: "rate_limiting",  status: 429, message: "rate limit exceeded",       reason: "per-agent quota 600 calls/10m" },
 ];
 
@@ -74,7 +75,7 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
 
 function rowHTML(r) {
   const outcome = isDenied(r)
-    ? `<span class="text-deny">✕ ${r.outcome.status}</span> <span class="text-ink-400">${r.outcome.stage}</span>`
+    ? `<span class="text-deny">✕ ${r.outcome.status}</span> <span class="text-ink-400">${STAGE_LABEL[r.outcome.stage]}</span>`
     : r.record === "response"
       ? `<span class="text-allow">✓ ${r.outcome.status}</span> <span class="text-ink-500">delivered</span>`
       : `<span class="text-allow">✓</span> <span class="text-ink-500">forwarded</span>`;
@@ -84,7 +85,7 @@ function rowHTML(r) {
   return `<tr class="rec-row ${isDenied(r) ? "bg-deny/[0.04]" : ""}" data-id="${r.call_id}" tabindex="0">
     <td class="px-5 py-2 text-ink-500">${fmtTime(r.t)}</td>
     <td class="py-2"><span class="${r.record === "request" ? "text-keeper-300" : "text-ink-300"}">${r.record === "request" ? "REQ" : "RES"}</span></td>
-    <td class="truncate py-2 ${r.agent_id ? "text-ink-100" : "text-deny"}">${r.agent_id ?? "null"}</td>
+    <td class="truncate py-2 ${r.agent_id ? "text-ink-100" : "text-deny"}">${r.agent_id ?? "unknown"}</td>
     <td class="truncate py-2 text-ink-400">${r.call_id.slice(0, 11)}…</td>
     <td class="truncate py-2">${tools}</td>
     <td class="py-2 text-right text-ink-300">${r.tokens ? `${fmtNum(r.tokens.sent)} / ${fmtNum(r.tokens.received)}` : `<span class="text-ink-600">—</span>`}</td>
@@ -99,31 +100,31 @@ function detailHTML(r) {
   const stages = r.stages.map((s) => {
     const d = s.decision ?? s.observation;
     return `<li class="flex items-center justify-between gap-2 py-1">
-      <span class="flex items-center gap-2"><span class="size-1.5 rounded-full ${stageColor[d]}"></span><span class="${d === "not_run" ? "text-ink-500" : "text-ink-200"}">${s.name}</span></span>
-      <span class="${d === "denied" ? "text-deny" : "text-ink-500"}">${d}${s.duration_us ? ` · ${fmtDur(s.duration_us)}` : ""}</span></li>`;
+      <span class="flex items-center gap-2"><span class="size-1.5 rounded-full ${stageColor[d]}"></span><span class="${d === "not_run" ? "text-ink-500" : "text-ink-200"}">${STAGE_LABEL[s.name]}</span></span>
+      <span class="${d === "denied" ? "text-deny" : "text-ink-500"}">${{ allowed: "passed", completed: "passed", denied: "blocked", failed: "failed", not_run: "skipped" }[d]}</span></li>`;
   }).join("");
   const tools = r.tools.length
-    ? `<p class="mt-5 text-[10px] tracking-widest text-ink-500 uppercase">${r.record === "response" ? "tool_calls" : "tool_results"}</p>
-       <ul class="mt-2 space-y-1.5">${r.tools.map((t) => `<li class="rounded border border-ink-800 bg-ink-950 px-2.5 py-1.5"><div class="flex justify-between"><span class="text-ink-100">${t}</span><span class="text-ink-500">${rnd(120, 9000)} B</span></div><div class="mt-0.5 text-ink-500">fp_${hex(16)}</div></li>`).join("")}</ul>`
+    ? `<p class="mt-5 text-[10px] tracking-widest text-ink-500 uppercase">${r.record === "response" ? "tools requested" : "tool results"}</p>
+       <ul class="mt-2 space-y-1.5">${r.tools.map((t) => `<li class="rounded border border-ink-800 bg-ink-950 px-2.5 py-1.5"><div class="flex justify-between"><span class="text-ink-100">${t}</span><span class="text-ink-500">${rnd(120, 9000)} B</span></div></li>`).join("")}</ul>`
     : "";
   const reason = isDenied(r)
     ? `<div class="mt-4 rounded border border-deny/30 bg-deny/10 p-2.5"><p class="text-[10px] tracking-widest text-deny uppercase">reason · operators only</p><p class="mt-1 text-ink-100">${esc(r.outcome.reason)}</p></div>`
     : "";
   return `<div class="font-mono text-[11px]">
-    <div class="flex items-center justify-between"><span class="text-ink-500">${r.record} record</span>
+    <div class="flex items-center justify-between"><span class="text-ink-500">${r.record}</span>
       <span class="${isDenied(r) ? "text-deny" : "text-allow"}">${isDenied(r) ? "denied" : r.outcome.result}</span></div>
     <p class="mt-1 truncate text-[13px] text-white">${r.call_id}</p>
     ${reason}
     <dl class="mt-4 divide-y divide-ink-800">
-      ${row("agent_id", r.agent_id ?? '<span class="text-deny">null</span>')}
+      ${row("agent", r.agent_id ?? '<span class="text-deny">unknown</span>')}
       ${row("model", r.model)}
-      ${row("session", r.session.id ? `${r.session.id.slice(0, 8)}… <span class="text-ink-500">${r.session.source}</span>` : '<span class="text-ink-500">absent</span>')}
-      ${row(r.record === "response" ? "started_at" : "received_at", fmtTime(r.t))}
+      ${row("session", r.session.id ? `${r.session.id.slice(0, 8)}…` : '<span class="text-ink-500">absent</span>')}
+      ${row("time", fmtTime(r.t))}
       ${r.tokens ? row("tokens", `${r.tokens.sent.toLocaleString("en")} → ${r.tokens.received.toLocaleString("en")}`) : ""}
-      ${r.first_byte_us ? row("first_byte", fmtDur(r.first_byte_us)) : ""}
-      ${r.stop_reason ? row("stop_reason", r.stop_reason) : ""}
+      ${r.first_byte_us ? row("first response", fmtDur(r.first_byte_us)) : ""}
+      
     </dl>
-    <p class="mt-5 text-[10px] tracking-widest text-ink-500 uppercase">stages</p>
+    <p class="mt-5 text-[10px] tracking-widest text-ink-500 uppercase">checks</p>
     <ul class="mt-1">${stages}</ul>
     ${tools}
     <p class="mt-5 text-[10px]/4 text-ink-600">No prompt, argument or result content is ever recorded.</p>
@@ -268,8 +269,8 @@ document.addEventListener("htmx:afterSettle", (e) => {
 });
 
 // ───────────────────── Hero: how-it-works flow ─────────────────────
-// Calls travel agent → gateway stages → provider; responses come back.
-// Denied calls stop at the stage that refused them.
+// Calls travel agent → gateway → provider; responses come back.
+// A denied call stops inside the gateway, where a red box marks the check that refused it.
 
 function initFlow(svg) {
   const NS = "http://www.w3.org/2000/svg";
@@ -281,7 +282,7 @@ function initFlow(svg) {
   const thru = $("fthru");
   const AGENTS = ["claude-code", "review-bot", "support-bot", "claims-triage", "unknown"];
   const PROVIDERS = ["anthropic", "openai", "deepseek"];
-  const CELL_X = cells.map((_, k) => 453 + k * 59);
+  const CELL_X = cells.map((_, k) => 470 + k * 52);
 
   // [agent, provider, deniedAtStage | null, status, reason]
   const SCRIPT = [
@@ -338,37 +339,25 @@ function initFlow(svg) {
     });
   }
 
-  // Light every stage that an in-flight call is currently passing through.
-  const inGateway = new Map();
-  const paint = () => cells.forEach((c, k) =>
-    c.classList.toggle("on", [...inGateway.values()].some((x) => Math.abs(x - CELL_X[k]) < 27)));
-  const tracker = (d) => (pt, path) => {
-    if (path === thru) inGateway.set(d, pt.x); else inGateway.delete(d);
-    paint();
-  };
-  const leave = (d) => { inGateway.delete(d); paint(); };
-
   async function send([a, p, deny, status, reason]) {
     const fin = $("fin" + a), fout = $("fout" + p);
     flash(`[data-agent="${a}"]`, "is-active", 600);
     const d = dot(deny === 0 ? "#f87171" : "#7ee8d8", 4.5);
     await travel(d, [[fin, 0, 1]], 0.32);
     if (deny !== null) {
-      const stop = (CELL_X[deny] - 410) / 380;
-      await travel(d, [[thru, 0, stop]], 0.22, tracker(d));
-      leave(d);
+      const stop = (CELL_X[deny] - 440) / 320;
+      await travel(d, [[thru, 0, stop]], 0.22);
       d.setAttribute("fill", "#f87171");
       cells[deny].classList.add("deny");
       flag.textContent = `✕ ${status} · ${reason}`;
-      flag.setAttribute("x", Math.min(695, Math.max(505, CELL_X[deny])));
+      flag.setAttribute("x", Math.min(670, Math.max(530, CELL_X[deny])));
       flag.setAttribute("opacity", "1");
-      log(`<tspan fill="#f87171">✕ ${status}</tspan> <tspan fill="#eef2f6">${AGENTS[a]}</tspan>  denied at ${cells[deny].querySelector(".fl-lbl").textContent} · ${reason}`);
+      log(`<tspan fill="#f87171">✕ ${status}</tspan> <tspan fill="#eef2f6">${AGENTS[a]}</tspan>  denied · ${reason}`);
       d.classList.add("fl-die");
       setTimeout(() => { cells[deny].classList.remove("deny"); flag.setAttribute("opacity", "0"); d.remove(); }, 1300);
       return;
     }
-    await travel(d, [[thru, 0, 1]], 0.22, tracker(d));
-    leave(d);
+    await travel(d, [[thru, 0, 1]], 0.22);
     await travel(d, [[fout, 0, 1]], 0.32);
     d.remove();
     flash(`[data-provider="${p}"]`, "is-active", 700);
@@ -387,7 +376,7 @@ function initFlow(svg) {
 
   if (reducedMotion) {
     log(`<tspan fill="#4ade80">✓ 200</tspan> <tspan fill="#eef2f6">claude-code</tspan> → anthropic  traced`);
-    log(`<tspan fill="#f87171">✕ 401</tspan> <tspan fill="#eef2f6">unknown</tspan>  denied at identify · unknown agent`);
+    log(`<tspan fill="#f87171">✕ 401</tspan> <tspan fill="#eef2f6">unknown</tspan>  denied · unknown agent`);
     log(`<tspan fill="#4ade80">✓ 200</tspan> <tspan fill="#eef2f6">support-bot</tspan> → openai  traced`);
     return;
   }

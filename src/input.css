@@ -192,13 +192,10 @@
 .hx-cell:hover .hx-lbl { fill: #ffffff; }
 
 /* Hero flow diagram */
-.fl-cell rect { fill: #2a374b; stroke: #4b5a70; transition: fill 120ms, stroke 120ms; }
-.fl-cell .fl-num { fill: #7c8aa0; }
-.fl-cell .fl-lbl { fill: #c3ccd8; }
-.fl-cell.on rect { fill: #134e4a; stroke: #2dd4bf; }
-.fl-cell.on .fl-lbl { fill: #ffffff; }
+.fl-cell rect { fill: transparent; stroke: transparent; transition: fill 150ms, stroke 150ms; }
+.fl-cell .fl-x { fill: transparent; pointer-events: none; }
 .fl-cell.deny rect { fill: #4a2c36; stroke: #f87171; }
-.fl-cell.deny .fl-lbl, .fl-cell.deny .fl-num { fill: #fca5a5; }
+.fl-cell.deny .fl-x { fill: #fca5a5; }
 .fl-node rect { transition: stroke 200ms, fill 200ms; }
 .fl-node.is-active rect { stroke: #2dd4bf; }
 #fl-flag { transition: opacity 200ms; }

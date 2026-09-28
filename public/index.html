@@ -36,7 +36,6 @@
       <a href="#traces" class="hover:text-white">Traces</a>
       <a href="#integrate" class="hover:text-white">Adoption</a>
       <a href="#sovereignty" class="hover:text-white">Sovereignty</a>
-      <a href="#roadmap" class="hover:text-white">Roadmap</a>
     </div>
     <a href="#pilot" class="btn-primary !py-2">Request a pilot</a>
   </nav>
@@ -78,17 +77,17 @@
       </div>
       <div class="p-4 sm:p-6">
 <svg id="flow" viewBox="0 0 1200 460" class="block w-full font-mono" role="img" aria-labelledby="flow-title flow-desc">
-<title id="flow-title">How AgentKeeper works</title><desc id="flow-desc">Five agents, including Claude Code, send calls to one AgentKeeper gateway. Each call passes six stages: identify, policy, monitor, filter, limit and audit. Allowed calls go on to Anthropic, OpenAI or DeepSeek, and their responses come back. Denied calls stop at the stage that refused them.</desc>
+<title id="flow-title">How AgentKeeper works</title><desc id="flow-desc">Five agents, including Claude Code, send calls to one AgentKeeper gateway, which checks every call. Allowed calls go on to Anthropic, OpenAI or DeepSeek, and their responses come back. Denied calls are stopped inside the gateway and never reach a provider.</desc>
 <g fill="none" stroke-width="1.25">
-<path id="fin0" d="M232 62 C 322 62, 330 222, 410 222" stroke="#4b5a70" stroke-opacity="1"/>
-<path id="fin1" d="M232 146 C 322 146, 330 222, 410 222" stroke="#4b5a70" stroke-opacity="1"/>
-<path id="fin2" d="M232 230 C 322 230, 330 222, 410 222" stroke="#4b5a70" stroke-opacity="1"/>
-<path id="fin3" d="M232 314 C 322 314, 330 222, 410 222" stroke="#4b5a70" stroke-opacity="1"/>
-<path id="fin4" d="M232 398 C 322 398, 330 222, 410 222" stroke="#f87171" stroke-opacity="0.55" stroke-dasharray="4 4"/>
-<path id="fout0" d="M790 222 C 870 222, 880 130, 968 130" stroke="#4b5a70"/>
-<path id="fout1" d="M790 222 C 870 222, 880 230, 968 230" stroke="#4b5a70"/>
-<path id="fout2" d="M790 222 C 870 222, 880 330, 968 330" stroke="#4b5a70"/>
-<path id="fthru" d="M410 222 L790 222" stroke="#17766c" stroke-opacity=".6"/>
+<path id="fin0" d="M232 62 C 322 62, 350 222, 440 222" stroke="#4b5a70" stroke-opacity="1"/>
+<path id="fin1" d="M232 146 C 322 146, 350 222, 440 222" stroke="#4b5a70" stroke-opacity="1"/>
+<path id="fin2" d="M232 230 C 322 230, 350 222, 440 222" stroke="#4b5a70" stroke-opacity="1"/>
+<path id="fin3" d="M232 314 C 322 314, 350 222, 440 222" stroke="#4b5a70" stroke-opacity="1"/>
+<path id="fin4" d="M232 398 C 322 398, 350 222, 440 222" stroke="#f87171" stroke-opacity="0.55" stroke-dasharray="4 4"/>
+<path id="fout0" d="M760 222 C 850 222, 870 130, 968 130" stroke="#4b5a70"/>
+<path id="fout1" d="M760 222 C 850 222, 870 230, 968 230" stroke="#4b5a70"/>
+<path id="fout2" d="M760 222 C 850 222, 870 330, 968 330" stroke="#4b5a70"/>
+<path id="fthru" d="M440 222 L760 222" stroke="#17766c" stroke-opacity=".6"/>
 </g>
 <g font-size="12">
 <text x="20" y="22" fill="#7c8aa0" font-size="10" letter-spacing="1.5">AGENTS · IN YOUR SANDBOXES</text>
@@ -99,23 +98,23 @@
 <g class="fl-node" data-agent="4"><rect x="20" y="372" width="212" height="52" rx="7" fill="#3b2a35" stroke="#f87171" stroke-opacity=".55" stroke-dasharray="4 3"/><text x="36" y="394" fill="#fca5a5" font-weight="500">unknown</text><text x="36" y="411" fill="#f87171" fill-opacity=".75" font-size="10.5">10.4.2.19 · no credential</text></g>
 </g>
 <g>
-<rect x="410" y="96" width="380" height="268" rx="12" fill="#134e4a" fill-opacity=".28" stroke="#2dd4bf" stroke-opacity=".8"/>
-<path d="M436 124 l11 4.2 v9.3 c0 6.2 -4.9 10.3 -11 13.5 c-6.1 -3.2 -11 -7.3 -11 -13.5 v-9.3 z" fill="#2dd4bf"/>
-<text x="460" y="134" fill="#ffffff" font-size="15" font-weight="500" font-family="Inter, sans-serif">AgentKeeper Gateway</text>
-<text x="460" y="151" fill="#9aa7b8" font-size="10.5">one endpoint · provider keys held here</text>
-<text x="774" y="134" fill="#4ade80" font-size="10" text-anchor="end">● fail-closed</text>
-<g class="fl-cell" data-stage="0"><rect x="426" y="198" width="54" height="48" rx="5"/><text x="453" y="216" text-anchor="middle" font-size="9.5" class="fl-num">01</text><text x="453" y="233" text-anchor="middle" font-size="10" class="fl-lbl">identify</text></g>
-<g class="fl-cell" data-stage="1"><rect x="485" y="198" width="54" height="48" rx="5"/><text x="512" y="216" text-anchor="middle" font-size="9.5" class="fl-num">02</text><text x="512" y="233" text-anchor="middle" font-size="10" class="fl-lbl">policy</text></g>
-<g class="fl-cell" data-stage="2"><rect x="544" y="198" width="54" height="48" rx="5"/><text x="571" y="216" text-anchor="middle" font-size="9.5" class="fl-num">03</text><text x="571" y="233" text-anchor="middle" font-size="10" class="fl-lbl">monitor</text></g>
-<g class="fl-cell" data-stage="3"><rect x="603" y="198" width="54" height="48" rx="5"/><text x="630" y="216" text-anchor="middle" font-size="9.5" class="fl-num">04</text><text x="630" y="233" text-anchor="middle" font-size="10" class="fl-lbl">filter</text></g>
-<g class="fl-cell" data-stage="4"><rect x="662" y="198" width="54" height="48" rx="5"/><text x="689" y="216" text-anchor="middle" font-size="9.5" class="fl-num">05</text><text x="689" y="233" text-anchor="middle" font-size="10" class="fl-lbl">limit</text></g>
-<g class="fl-cell" data-stage="5"><rect x="721" y="198" width="54" height="48" rx="5"/><text x="748" y="216" text-anchor="middle" font-size="9.5" class="fl-num">06</text><text x="748" y="233" text-anchor="middle" font-size="10" class="fl-lbl">audit</text></g>
-<text id="fl-flag" x="600" y="186" text-anchor="middle" font-size="11" fill="#f87171" opacity="0"></text>
-<line x1="426" y1="266" x2="774" y2="266" stroke="#17766c" stroke-opacity=".5"/>
-<text x="426" y="284" fill="#7c8aa0" font-size="9.5" letter-spacing="1.5">AUDIT · EVERY CALL, ALLOWED OR DENIED</text>
-<text class="fl-log" x="426" y="305" font-size="10.5" fill="#c3ccd8" opacity="1"></text>
-<text class="fl-log" x="426" y="322" font-size="10.5" fill="#c3ccd8" opacity="0.65"></text>
-<text class="fl-log" x="426" y="339" font-size="10.5" fill="#c3ccd8" opacity="0.35"></text>
+<rect x="440" y="122" width="320" height="220" rx="12" fill="#134e4a" fill-opacity=".28" stroke="#2dd4bf" stroke-opacity=".8"/>
+<path d="M466 144 l11 4.2 v9.3 c0 6.2 -4.9 10.3 -11 13.5 c-6.1 -3.2 -11 -7.3 -11 -13.5 v-9.3 z" fill="#2dd4bf"/>
+<text x="490" y="156" fill="#ffffff" font-size="15" font-weight="500" font-family="Inter, sans-serif">AgentKeeper Gateway</text>
+<text x="490" y="172" fill="#9aa7b8" font-size="10.5">one endpoint · keys held here</text>
+<text x="744" y="140" fill="#4ade80" font-size="9.5" text-anchor="end">● fail-closed</text>
+<g class="fl-cell" data-stage="0"><rect x="448" y="204" width="44" height="36" rx="5"/><text x="470" y="227" text-anchor="middle" font-size="12" class="fl-x">✕</text></g>
+<g class="fl-cell" data-stage="1"><rect x="500" y="204" width="44" height="36" rx="5"/><text x="522" y="227" text-anchor="middle" font-size="12" class="fl-x">✕</text></g>
+<g class="fl-cell" data-stage="2"><rect x="552" y="204" width="44" height="36" rx="5"/><text x="574" y="227" text-anchor="middle" font-size="12" class="fl-x">✕</text></g>
+<g class="fl-cell" data-stage="3"><rect x="604" y="204" width="44" height="36" rx="5"/><text x="626" y="227" text-anchor="middle" font-size="12" class="fl-x">✕</text></g>
+<g class="fl-cell" data-stage="4"><rect x="656" y="204" width="44" height="36" rx="5"/><text x="678" y="227" text-anchor="middle" font-size="12" class="fl-x">✕</text></g>
+<g class="fl-cell" data-stage="5"><rect x="708" y="204" width="44" height="36" rx="5"/><text x="730" y="227" text-anchor="middle" font-size="12" class="fl-x">✕</text></g>
+<text id="fl-flag" x="600" y="198" text-anchor="middle" font-size="11" fill="#f87171" opacity="0"></text>
+<line x1="456" y1="254" x2="744" y2="254" stroke="#17766c" stroke-opacity=".5"/>
+<text x="456" y="271" fill="#7c8aa0" font-size="9" letter-spacing="1.5">AUDIT · EVERY CALL</text>
+<text class="fl-log" x="456" y="291" font-size="10" fill="#c3ccd8" opacity="1"></text>
+<text class="fl-log" x="456" y="307" font-size="10" fill="#c3ccd8" opacity="0.65"></text>
+<text class="fl-log" x="456" y="323" font-size="10" fill="#c3ccd8" opacity="0.35"></text>
 </g>
 <g font-size="12">
 <text x="968" y="22" fill="#7c8aa0" font-size="10" letter-spacing="1.5">LLM PROVIDERS</text>
@@ -129,8 +128,8 @@
       <figcaption class="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-ink-800 px-5 py-3 font-mono text-[10.5px] text-ink-500">
         <span class="flex items-center gap-2"><span class="size-2 rounded-full bg-keeper-300"></span>call, allowed</span>
         <span class="flex items-center gap-2"><span class="size-2 rounded-full bg-ink-300"></span>response</span>
-        <span class="flex items-center gap-2"><span class="size-2 rounded-full bg-deny"></span>denied at a stage</span>
-        <span class="sm:ml-auto">Illustrative. Anthropic is supported today; OpenAI and DeepSeek are on the roadmap.</span>
+        <span class="flex items-center gap-2"><span class="size-2 rounded-full bg-deny"></span>denied by a check</span>
+        <span class="sm:ml-auto">Illustrative.</span>
       </figcaption>
     </figure>
   </div>
@@ -204,33 +203,30 @@
 <section id="pipeline" class="border-b border-ink-800 bg-ink-900/40">
   <div class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
     <p class="eyebrow">02 — The governance pipeline</p>
-    <h2 class="section-title max-w-3xl">Six stages, in a fixed order, on every call.</h2>
+    <h2 class="section-title max-w-3xl">Six layers of control on every call.</h2>
     <p class="section-lead">
-      Every request that leaves an agent passes through the same pipeline before it reaches the provider.
-      The order is set at build time and cannot be changed in config. Any stage can deny the call, and the first denial stops it.
+      Every call from an agent is checked before it reaches the model. Any layer can stop it, and a stopped call never
+      leaves your network.
     </p>
 
     <ol class="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-ink-700 bg-ink-700 sm:grid-cols-2 lg:grid-cols-3">
       <li class="bg-ink-900 p-6">
         <div class="flex items-center justify-between">
           <span class="font-mono text-sm text-keeper-400">01</span>
-          <span class="badge badge-live">available</span>
         </div>
         <h3 class="mt-4 font-semibold text-white">Identification</h3>
-        <p class="mt-2 text-sm/6 text-ink-300">Authenticates each call to a registered <code class="font-mono text-ink-100">agent_id</code> using a per-agent API key or a signed JWT. Every failure returns the same generic denial, so callers cannot probe for valid IDs.</p>
+        <p class="mt-2 text-sm/6 text-ink-300">Every call is tied to a known, registered agent. Unknown or misconfigured callers are turned away before they reach a model.</p>
       </li>
       <li class="bg-ink-900 p-6">
         <div class="flex items-center justify-between">
           <span class="font-mono text-sm text-keeper-400">02</span>
-          <span class="badge badge-next">roadmap</span>
         </div>
         <h3 class="mt-4 font-semibold text-white">Policies</h3>
-        <p class="mt-2 text-sm/6 text-ink-300">Declarative rules in OPA/Rego: which models, tools and resources each agent may use, and when. Policies are code you can review, version and change without redeploying.</p>
+        <p class="mt-2 text-sm/6 text-ink-300">Decide which models, tools and data each agent may use, and when. Policies are reviewable and versioned, and they change without downtime.</p>
       </li>
       <li class="bg-ink-900 p-6">
         <div class="flex items-center justify-between">
           <span class="font-mono text-sm text-keeper-400">03</span>
-          <span class="badge badge-next">roadmap</span>
         </div>
         <h3 class="mt-4 font-semibold text-white">Monitoring</h3>
         <p class="mt-2 text-sm/6 text-ink-300">Call frequency, token volume, latency and error rates per agent, with alerts on anomalous behaviour.</p>
@@ -238,35 +234,32 @@
       <li class="bg-ink-900 p-6">
         <div class="flex items-center justify-between">
           <span class="font-mono text-sm text-keeper-400">04</span>
-          <span class="badge badge-next">roadmap</span>
         </div>
         <h3 class="mt-4 font-semibold text-white">Filtering</h3>
-        <p class="mt-2 text-sm/6 text-ink-300">Detects secrets, API keys, personal data and prompt injection in payloads, and blocks or redacts them while the request is in flight.</p>
+        <p class="mt-2 text-sm/6 text-ink-300">Catches secrets, API keys, personal data and prompt injection before they leave your network.</p>
       </li>
       <li class="bg-ink-900 p-6">
         <div class="flex items-center justify-between">
           <span class="font-mono text-sm text-keeper-400">05</span>
-          <span class="badge badge-next">roadmap</span>
         </div>
         <h3 class="mt-4 font-semibold text-white">Rate limiting</h3>
-        <p class="mt-2 text-sm/6 text-ink-300">Quotas per agent and per model, with burst control. A runaway loop hits a limit before it runs up your bill.</p>
+        <p class="mt-2 text-sm/6 text-ink-300">Limits per agent and per model. A runaway loop hits a ceiling before it runs up your bill.</p>
       </li>
       <li class="bg-ink-900 p-6">
         <div class="flex items-center justify-between">
           <span class="font-mono text-sm text-keeper-400">06</span>
-          <span class="badge badge-live">tracing available</span>
         </div>
         <h3 class="mt-4 font-semibold text-white">Audit</h3>
-        <p class="mt-2 text-sm/6 text-ink-300">Records who called, what they did, when, and what each stage decided. Every call is logged, whether it was allowed or denied.</p>
+        <p class="mt-2 text-sm/6 text-ink-300">A record of who called, what they did, when, and what was decided, for every call, allowed or denied.</p>
       </li>
     </ol>
 
     <!-- Guarantees -->
     <ul class="mt-5 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-ink-700 bg-ink-700 text-sm/6 sm:grid-cols-2 lg:grid-cols-4">
-      <li class="bg-ink-900 p-6"><p class="font-medium text-white">Fails closed</p><p class="mt-2 text-ink-300">If a stage errors, the call is denied, not forwarded. A broken governance layer never turns into "allow everything".</p></li>
-      <li class="bg-ink-900 p-6"><p class="font-medium text-white">Keeps your keys</p><p class="mt-2 text-ink-300">Only the gateway holds the provider key. Whatever credential the caller sends is stripped, and nothing is logged.</p></li>
-      <li class="bg-ink-900 p-6"><p class="font-medium text-white">Says little to the caller</p><p class="mt-2 text-ink-300">A denied agent learns which stage refused and gets a request ID. The detailed reason goes only to operators.</p></li>
-      <li class="bg-ink-900 p-6"><p class="font-medium text-white">Invisible when allowed</p><p class="mt-2 text-ink-300">Responses stream as fast as the provider sends them. An allowed call behaves exactly as if AgentKeeper weren't there.</p></li>
+      <li class="bg-ink-900 p-6"><p class="font-medium text-white">Fails safe</p><p class="mt-2 text-ink-300">If something goes wrong inside AgentKeeper, calls are blocked, never waved through.</p></li>
+      <li class="bg-ink-900 p-6"><p class="font-medium text-white">Keeps your keys</p><p class="mt-2 text-ink-300">Agents never hold your model provider keys, so they have none to leak.</p></li>
+      <li class="bg-ink-900 p-6"><p class="font-medium text-white">Discreet refusals</p><p class="mt-2 text-ink-300">A refused caller gets a clear answer, not a map of your rules. The details go to your team.</p></li>
+      <li class="bg-ink-900 p-6"><p class="font-medium text-white">Invisible when allowed</p><p class="mt-2 text-ink-300">Allowed calls work exactly as before, with no noticeable delay.</p></li>
     </ul>
   </div>
 </section>
@@ -300,7 +293,7 @@
             <svg viewBox="0 0 16 16" class="size-3 fill-ink-500" aria-hidden="true"><path d="M5 7V5a3 3 0 1 1 6 0v2h1v7H4V7h1Zm1.5 0h3V5a1.5 1.5 0 0 0-3 0v2Z"/></svg>
             app.agentkeeper.eu / acme-health / production
           </div>
-          <span class="hidden font-mono text-[10px] tracking-widest text-ink-500 uppercase sm:block">design preview</span>
+          <span class="hidden font-mono text-[10px] tracking-widest text-ink-500 uppercase sm:block">sample data</span>
         </div>
 
         <div class="overflow-x-auto">
@@ -343,8 +336,7 @@
         </div>
       </div>
       <p class="mt-4 text-center font-mono text-[11px] text-ink-500">
-        Design preview of the AgentKeeper platform. Sample data; every field comes from the gateway's
-        <span class="text-ink-300">agentkeeper.trace/v1</span> record.
+        The AgentKeeper platform, shown with sample data.
       </p>
     </div>
   </div>
@@ -372,7 +364,7 @@
           <span class="text-ink-400">host <span class="text-ink-100">ci-runner-03</span></span>
           <span class="text-ink-400">4 calls · 3 tool calls · 17.4 s</span>
         </div>
-        <span class="text-[10px] tracking-widest text-ink-500 uppercase">design preview</span>
+        <span class="text-[10px] tracking-widest text-ink-500 uppercase">sample data</span>
       </div>
       <div class="overflow-x-auto">
         <div class="min-w-[860px] font-mono text-[11.5px]">
@@ -384,38 +376,38 @@
           <div class="relative">
             <div class="pointer-events-none absolute inset-y-0 right-[150px] left-[250px]" aria-hidden="true"><div class="absolute inset-y-0 border-l border-ink-800/70" style="left:0.0%"></div><div class="absolute inset-y-0 border-l border-ink-800/70" style="left:25.0%"></div><div class="absolute inset-y-0 border-l border-ink-800/70" style="left:50.0%"></div><div class="absolute inset-y-0 border-l border-ink-800/70" style="left:75.0%"></div><div class="absolute inset-y-0 border-l border-ink-800/70" style="left:100.0%"></div></div>
           <div class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850 ">
-            <div class="truncate px-5 py-2"><span class="text-keeper-300">LLM</span> <span class="text-ink-200">claude-opus-5</span> <span class="text-ink-600">ak_b55fa120…</span></div>
+            <div class="truncate px-5 py-2"><span class="text-keeper-300">LLM</span> <span class="text-ink-200">claude-opus-5</span></div>
             <div class="relative h-8"><div class="absolute inset-y-1.5 rounded-sm bg-keeper-700/70 ring-1 ring-keeper-500/40" style="left:0.00%;width:17.50%"><div class="h-full rounded-l-sm bg-keeper-400/30" style="width:40.0%"></div></div></div>
             <div class="px-5 text-right text-ink-400">58.1k → 141</div>
           </div>
           <div class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850 ">
-            <div class="truncate px-5 py-2"><span class="pl-4 text-ink-500">└</span> <span class="text-ink-400">tool</span> <span class="text-ink-100">Read</span> <span class="text-ink-600">toolu_018C6A…</span></div>
+            <div class="truncate px-5 py-2"><span class="pl-4 text-ink-500">└</span> <span class="text-ink-400">tool</span> <span class="text-ink-100">Read</span></div>
             <div class="relative h-8"><div class="absolute inset-y-2 rounded-sm border border-dashed border-ink-500 bg-ink-800" style="left:17.50%;width:2.00%"></div></div>
             <div class="px-5 text-right text-ink-400">1.2 kB</div>
           </div>
           <div class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850 ">
-            <div class="truncate px-5 py-2"><span class="text-keeper-300">LLM</span> <span class="text-ink-200">claude-opus-5</span> <span class="text-ink-600">ak_ed1c9b51…</span></div>
+            <div class="truncate px-5 py-2"><span class="text-keeper-300">LLM</span> <span class="text-ink-200">claude-opus-5</span></div>
             <div class="relative h-8"><div class="absolute inset-y-1.5 rounded-sm bg-keeper-700/70 ring-1 ring-keeper-500/40" style="left:19.50%;width:21.50%"><div class="h-full rounded-l-sm bg-keeper-400/30" style="width:25.6%"></div></div></div>
             <div class="px-5 text-right text-ink-400">59.3k → 212</div>
           </div>
           <div class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850 ">
-            <div class="truncate px-5 py-2"><span class="pl-4 text-ink-500">└</span> <span class="text-ink-400">tool</span> <span class="text-ink-100">Bash</span> <span class="text-ink-600">toolu_01Hq2P…</span></div>
+            <div class="truncate px-5 py-2"><span class="pl-4 text-ink-500">└</span> <span class="text-ink-400">tool</span> <span class="text-ink-100">Bash</span></div>
             <div class="relative h-8"><div class="absolute inset-y-2 rounded-sm border border-dashed border-ink-500 bg-ink-800" style="left:41.00%;width:22.00%"></div></div>
             <div class="px-5 text-right text-ink-400">542 B</div>
           </div>
           <div class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850 ">
-            <div class="truncate px-5 py-2"><span class="text-keeper-300">LLM</span> <span class="text-ink-200">claude-opus-5</span> <span class="text-ink-600">ak_7c02e4f9…</span></div>
+            <div class="truncate px-5 py-2"><span class="text-keeper-300">LLM</span> <span class="text-ink-200">claude-opus-5</span></div>
             <div class="relative h-8"><div class="absolute inset-y-1.5 rounded-sm bg-keeper-700/70 ring-1 ring-keeper-500/40" style="left:63.00%;width:22.50%"><div class="h-full rounded-l-sm bg-keeper-400/30" style="width:35.6%"></div></div></div>
             <div class="px-5 text-right text-ink-400">60.1k → 96</div>
           </div>
           <div class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850 ">
-            <div class="truncate px-5 py-2"><span class="pl-4 text-ink-500">└</span> <span class="text-ink-400">tool</span> <span class="text-ink-100">Read</span> <span class="text-ink-600">toolu_01Nf8X…</span></div>
+            <div class="truncate px-5 py-2"><span class="pl-4 text-ink-500">└</span> <span class="text-ink-400">tool</span> <span class="text-ink-100">Read</span></div>
             <div class="relative h-8"><div class="absolute inset-y-2 rounded-sm border border-dashed border-ink-500 bg-ink-800" style="left:85.50%;width:1.50%"></div></div>
             <div class="px-5 text-right text-ink-400">311 B</div>
           </div>
           <div class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850 bg-deny/[0.05]">
-            <div class="truncate px-5 py-2"><span class="text-deny">LLM</span> <span class="text-ink-200">claude-opus-5</span> <span class="text-ink-600">ak_91d4a0c3…</span></div>
-            <div class="relative h-8"><div class="absolute top-1/2 flex -translate-y-1/2 translate-x-2 flex-row-reverse items-center gap-2" style="right:13.00%"><span class="grid size-4 place-items-center rounded-full border border-deny bg-ink-950 text-[9px] text-deny">✕</span><span class="whitespace-nowrap text-deny">denied before reaching the provider · 403 filtering · secret in tool result</span></div></div>
+            <div class="truncate px-5 py-2"><span class="text-deny">LLM</span> <span class="text-ink-200">claude-opus-5</span></div>
+            <div class="relative h-8"><div class="absolute top-1/2 flex -translate-y-1/2 translate-x-2 flex-row-reverse items-center gap-2" style="right:13.00%"><span class="grid size-4 place-items-center rounded-full border border-deny bg-ink-950 text-[9px] text-deny">✕</span><span class="whitespace-nowrap text-deny">blocked before reaching the provider · secret in tool result</span></div></div>
             <div class="px-5 text-right text-deny">not sent</div>
           </div>
           </div>
@@ -425,7 +417,7 @@
         <span class="flex items-center gap-2"><span class="h-2.5 w-5 rounded-sm bg-keeper-700/70 ring-1 ring-keeper-500/40"></span>model call</span>
         <span class="flex items-center gap-2"><span class="h-2.5 w-2 rounded-sm bg-keeper-400/40"></span>time to first byte</span>
         <span class="flex items-center gap-2"><span class="h-2.5 w-5 rounded-sm border border-dashed border-ink-500 bg-ink-800"></span>tool run by the agent</span>
-        <span class="ml-auto">Linked by the provider's tool-call IDs. No prompts, arguments or results are stored.</span>
+        <span class="ml-auto">What the prompts, arguments and results said is never stored.</span>
       </div>
     </div>
 
@@ -435,16 +427,16 @@
         <dd class="mt-2 text-sm/6 text-ink-400">Tool names, sizes and timings are recorded. What the prompt, arguments or results said is not.</dd>
       </div>
       <div>
-        <dt class="font-medium text-white">Keyed fingerprints</dt>
-        <dd class="mt-2 text-sm/6 text-ink-400">An HMAC under your own key shows when the same content comes back, without revealing what it was.</dd>
+        <dt class="font-medium text-white">Private by design</dt>
+        <dd class="mt-2 text-sm/6 text-ink-400">Spot repeated or suspicious content without anyone being able to read it back.</dd>
       </div>
       <div>
-        <dt class="font-medium text-white">Stateless gateways</dt>
-        <dd class="mt-2 text-sm/6 text-ink-400">Restart the gateway or scale it out behind a load balancer, and the traces come out the same.</dd>
+        <dt class="font-medium text-white">Scales with you</dt>
+        <dd class="mt-2 text-sm/6 text-ink-400">Add gateways as your agent fleet grows. Traces stay complete and consistent.</dd>
       </div>
       <div>
-        <dt class="font-medium text-white">Open, versioned format</dt>
-        <dd class="mt-2 text-sm/6 text-ink-400">Use our platform, or send the records to the observability stack you already run.</dd>
+        <dt class="font-medium text-white">Your data, your tools</dt>
+        <dd class="mt-2 text-sm/6 text-ink-400">Use our platform, or export to the observability stack you already run.</dd>
       </div>
     </dl>
   </div>
@@ -464,7 +456,7 @@
       <li class="bg-ink-900 p-7">
         <span class="font-mono text-sm text-keeper-400">step 1</span>
         <h3 class="mt-3 font-semibold text-white">Run the gateway</h3>
-        <p class="mt-2 text-sm/6 text-ink-300">A single Go binary or container, in your cloud, on-prem, or next to the agent. The provider API key stays in the gateway.</p>
+        <p class="mt-2 text-sm/6 text-ink-300">In your cloud, on-prem or next to the agent, or use our EU-hosted service. Your provider keys stay with AgentKeeper.</p>
       </li>
       <li class="bg-ink-900 p-7">
         <span class="font-mono text-sm text-keeper-400">step 2</span>
@@ -473,11 +465,8 @@
       </li>
       <li class="bg-ink-900 p-7">
         <span class="font-mono text-sm text-keeper-400">step 3</span>
-        <h3 class="mt-3 font-semibold text-white">Change the base URL</h3>
-        <p class="mt-2 text-sm/6 text-ink-300">Point the agent's base URL at the gateway. Every call and every tool call is identified and traced from that point on.</p>
-        <p class="mt-4 truncate rounded border border-ink-700 bg-ink-950 px-3 py-2 font-mono text-xs text-ink-200">
-          <span class="text-keeper-400">ANTHROPIC_BASE_URL</span>=https://gw.internal
-        </p>
+        <h3 class="mt-3 font-semibold text-white">Point your agents at it</h3>
+        <p class="mt-2 text-sm/6 text-ink-300">Point your agents at AgentKeeper. From then on, every call and every tool they use is identified and traced.</p>
       </li>
     </ol>
 
@@ -506,7 +495,7 @@
           Collects records from all your gateways and shows the live feed, the agent map and session traces.
           It is hosted in the EU. You can use your own observability stack instead.
         </p>
-        <p class="mt-5 font-mono text-xs text-ink-500">JSON lines → platform, or any log shipper → your SIEM</p>
+        <p class="mt-5 font-mono text-xs text-ink-500">platform, or export to your SIEM</p>
       </article>
     </div>
   </div>
@@ -538,12 +527,12 @@
         <div class="bg-ink-900 p-6">
           <p class="font-mono text-xs text-ink-500">standards</p>
           <p class="mt-2 font-medium text-white">Open formats, no lock-in</p>
-          <p class="mt-2 text-sm/6 text-ink-400">OPA/Rego for policies, W3C baggage for sessions, versioned JSON for traces. Bring your own observability stack.</p>
+          <p class="mt-2 text-sm/6 text-ink-400">Built on open standards, with your data exportable at any time. Bring your own observability stack.</p>
         </div>
         <div class="bg-ink-900 p-6">
           <p class="font-mono text-xs text-ink-500">minimise</p>
           <p class="mt-2 font-medium text-white">Data minimisation by default</p>
-          <p class="mt-2 text-sm/6 text-ink-400">Traces contain metadata and fingerprints, never payload content. This page itself makes no third-party requests.</p>
+          <p class="mt-2 text-sm/6 text-ink-400">Traces hold metadata only, never payload content. This page itself makes no third-party requests.</p>
         </div>
       </div>
     </div>
@@ -570,7 +559,7 @@
           <tr>
             <th scope="row" class="px-6 py-4 font-mono font-medium text-white">DORA</th>
             <td class="px-6 py-4 text-ink-300">Monitoring, anomaly detection, incident reconstruction</td>
-            <td class="px-6 py-4 text-ink-300">Timing for each stage and each tool call, and the ordered trace of every session</td>
+            <td class="px-6 py-4 text-ink-300">Timings and an ordered trace of every agent session</td>
           </tr>
           <tr>
             <th scope="row" class="px-6 py-4 font-mono font-medium text-white">GDPR</th>
@@ -627,7 +616,7 @@
         <div class="flex justify-between gap-6 py-3"><dt class="text-ink-100">A multi-provider LLM router</dt><dd class="text-right font-mono text-xs text-ink-500">see LiteLLM, OpenRouter</dd></div>
         <div class="flex justify-between gap-6 py-3"><dt class="text-ink-100">A sandbox</dt><dd class="text-right font-mono text-xs text-ink-500">use Docker, gVisor, Firecracker</dd></div>
         <div class="flex justify-between gap-6 py-3"><dt class="text-ink-100">A firewall or service mesh</dt><dd class="text-right font-mono text-xs text-ink-500">network isolation is the sandbox's job</dd></div>
-        <div class="flex justify-between gap-6 py-3"><dt class="text-ink-100">A secret manager</dt><dd class="text-right font-mono text-xs text-ink-500">keep your vault; we read env vars</dd></div>
+        <div class="flex justify-between gap-6 py-3"><dt class="text-ink-100">A secret manager</dt><dd class="text-right font-mono text-xs text-ink-500">keep your existing vault</dd></div>
         <div class="flex justify-between gap-6 py-3"><dt class="text-ink-100">A cost optimiser</dt><dd class="text-right font-mono text-xs text-ink-500">we govern; we don't route</dd></div>
       </dl>
       <p class="mt-6 text-xs/5 text-ink-500">
@@ -637,69 +626,12 @@
   </div>
 </section>
 
-<!-- ───────────────────────── Roadmap ───────────────────────── -->
-<section id="roadmap" class="border-b border-ink-800">
-  <div class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
-    <p class="eyebrow">08 — Roadmap</p>
-    <h2 class="section-title">Built from specs, one stage at a time.</h2>
-    <p class="section-lead">
-      Each feature starts as a functional and a technical spec, then gets tests, then an implementation, with a human
-      review between each step. This is where things stand now.
-    </p>
-
-    <div class="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-3">
-      <div class="panel p-7">
-        <div class="flex items-baseline justify-between">
-          <h3 class="font-semibold text-white">Phase 1 · Core</h3>
-          <span class="font-mono text-xs text-keeper-400">in progress</span>
-        </div>
-        <ul class="mt-6 space-y-2.5 font-mono text-[13px]">
-          <li class="flex gap-2.5 text-ink-100"><span class="text-allow">[x]</span> HTTP proxy, streaming</li>
-          <li class="flex gap-2.5 text-ink-100"><span class="text-allow">[x]</span> staging pipeline, fail-closed</li>
-          <li class="flex gap-2.5 text-ink-100"><span class="text-allow">[x]</span> agent identification (key / JWT)</li>
-          <li class="flex gap-2.5 text-ink-100"><span class="text-allow">[x]</span> call and tool-call tracing</li>
-          <li class="flex gap-2.5 text-ink-100"><span class="text-allow">[x]</span> provider credential injection</li>
-          <li class="flex gap-2.5 text-ink-400"><span class="text-ink-500">[ ]</span> OPA/Rego policy engine</li>
-          <li class="flex gap-2.5 text-ink-400"><span class="text-ink-500">[ ]</span> per-agent, per-model rate limits</li>
-        </ul>
-      </div>
-      <div class="panel p-7">
-        <div class="flex items-baseline justify-between">
-          <h3 class="font-semibold text-white">Phase 2 · Enterprise</h3>
-          <span class="font-mono text-xs text-ink-500">next</span>
-        </div>
-        <ul class="mt-6 space-y-2.5 font-mono text-[13px] text-ink-400">
-          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> PII and secret scanning</li>
-          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> prompt-injection detection</li>
-          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> platform: live records, agent map</li>
-          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> platform: session traces</li>
-          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> anomaly detection</li>
-          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> policy versioning and rollback</li>
-          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> multi-tenant isolation</li>
-        </ul>
-      </div>
-      <div class="panel p-7">
-        <div class="flex items-baseline justify-between">
-          <h3 class="font-semibold text-white">Phase 3 · Compliance</h3>
-          <span class="font-mono text-xs text-ink-500">later</span>
-        </div>
-        <ul class="mt-6 space-y-2.5 font-mono text-[13px] text-ink-400">
-          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> AI Act / DORA / SOC 2 exports</li>
-          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> signed, tamper-evident audit logs</li>
-          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> policy sign-off workflow</li>
-          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> compliance platform integrations</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ───────────────────────── Pilot / CTA ───────────────────────── -->
 <section id="pilot" class="relative overflow-hidden">
   <div class="grid-bg pointer-events-none absolute inset-0 rotate-180" aria-hidden="true"></div>
   <div class="relative mx-auto grid grid-cols-1 max-w-6xl gap-14 px-4 py-24 sm:px-6 lg:grid-cols-2">
     <div>
-      <p class="eyebrow">09 — Work with us</p>
+      <p class="eyebrow">08 — Start a pilot</p>
       <h2 class="section-title">What do you need to see before you give an agent production credentials?</h2>
       <p class="section-lead">We are looking for a small number of design partners in healthcare, legal, finance and software.</p>
       <div class="mt-10 space-y-5">
@@ -779,7 +711,6 @@
           <li><a href="#pipeline" class="hover:text-white">Pipeline</a></li>
           <li><a href="#platform" class="hover:text-white">Platform</a></li>
           <li><a href="#traces" class="hover:text-white">Session traces</a></li>
-          <li><a href="#roadmap" class="hover:text-white">Roadmap</a></li>
         </ul>
       </div>
       <div>

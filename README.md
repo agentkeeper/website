@@ -39,15 +39,12 @@ no Google Fonts, CDNs or analytics snippets.
 
 The *how it works* diagram is an inline SVG in `index.html`, animated by `initFlow` in `site.js`.
 It follows a fixed script of calls (`SCRIPT`), pauses when off-screen or on the pause button, and renders
-a static state under `prefers-reduced-motion`. OpenAI and DeepSeek appear as upstreams for illustration;
-the gateway only forwards to Anthropic today, and the caption says so.
+a static state under `prefers-reduced-motion`.
 
-## Platform preview
+## Platform views
 
-The product window in the hero and the session trace are **design mockups**: there is no platform UI yet.
-Sample records in `site.js` follow `agentkeeper.trace/v1` (`../agentkeeper/internal/trace/record.go`).
-They use the pipeline's planned stage names (`policies`, `filtering`, `rate_limiting`) alongside the
-shipped ones. The *host* shown on the agent map is not part of the v1 record yet.
+The platform window and the session trace show sample data. The live records are generated in
+`site.js`; the agent map's hosts are embedded as JSON in `public/partials/app-map.html`.
 
 ## To wire up before launch
 
@@ -56,5 +53,3 @@ shipped ones. The *host* shown on the agent map is not part of the v1 record yet
   swapped into `#pilot-result`.
 - **Contact address**: `hello@agentkeeper.eu` is a placeholder. It appears in `index.html`
   (footer) and `site.js` (`FALLBACK_EMAIL`).
-- **Roadmap and stage badges**: these reflect `../agentkeeper/specs` as of 2026-09-28
-  (pipeline, identification and tracing shipped). Update them as specs land.
