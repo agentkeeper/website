@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="680" viewBox="0 0 680 680" role="img" aria-label="AgentKeeper">
+  <rect width="680" height="680" rx="96" fill="#1c2530"/>
+  <path d="M340 120 L500 180 V330 C500 430 430 500 340 555 C250 500 180 430 180 330 V180 Z" fill="#2dd4bf"/>
+  <path d="M340 150 L472 200 V328 C472 415 412 476 340 522 C268 476 208 415 208 328 V200 Z" fill="#17766c"/>
+  <rect x="332" y="222" width="16" height="30" fill="#f4f6f5"/>
+  <circle cx="340" cy="214" r="10" fill="#f4f6f5"/>
+  <rect x="272" y="252" width="136" height="112" rx="22" fill="#f4f6f5"/>
+  <circle cx="312" cy="308" r="12" fill="#17766c"/>
+  <circle cx="368" cy="308" r="12" fill="#17766c"/>
+  <rect x="304" y="336" width="72" height="10" rx="5" fill="#17766c"/>
+</svg>

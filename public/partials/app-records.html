@@ -1,0 +1,55 @@
+<div class="flex h-full" data-live-records>
+  <div class="flex min-w-0 flex-1 flex-col">
+    <!-- toolbar -->
+    <div class="flex items-center justify-between gap-4 border-b border-ink-800 px-5 py-3">
+      <div>
+        <h3 class="text-sm font-semibold text-white">Live records</h3>
+        <p class="font-mono text-[11px] whitespace-nowrap text-ink-500">newest first · all gateways</p>
+      </div>
+      <div class="flex items-center gap-1.5 font-mono text-[11px] whitespace-nowrap">
+        <span class="text-ink-500">agents</span>
+        <button type="button" class="agent-chip" data-agent="build-bot" aria-pressed="true">build-bot</button>
+        <button type="button" class="agent-chip" data-agent="support-bot" aria-pressed="true">support-bot</button>
+        <button type="button" class="agent-chip" data-agent="claims-triage" aria-pressed="true">claims-triage</button>
+        <button type="button" class="agent-chip" data-agent="" aria-pressed="true">unidentified</button>
+      </div>
+    </div>
+
+    <!-- counters / filter -->
+    <div class="flex items-center justify-between border-b border-ink-800 px-5">
+      <div role="tablist" class="flex font-mono text-[11px]">
+        <button type="button" role="tab" class="rec-filter" data-filter="all" aria-selected="true">all <span data-count="all">0</span></button>
+        <button type="button" role="tab" class="rec-filter" data-filter="allowed" aria-selected="false"><span class="text-allow">●</span> allowed <span data-count="allowed">0</span></button>
+        <button type="button" role="tab" class="rec-filter" data-filter="denied" aria-selected="false"><span class="text-deny">●</span> denied <span data-count="denied">0</span></button>
+      </div>
+      <button type="button" class="flex items-center gap-2 font-mono text-[11px] text-ink-300" data-live-toggle>
+        <span class="relative flex size-2"><span class="live-ping absolute inline-flex size-full rounded-full bg-allow opacity-60"></span><span class="relative inline-flex size-2 rounded-full bg-allow"></span></span>
+        <span data-live-label>live</span>
+      </button>
+    </div>
+
+    <!-- table -->
+    <div class="min-h-0 flex-1 overflow-hidden">
+      <table class="w-full table-fixed text-left font-mono text-[11.5px]">
+        <thead class="text-[10px] tracking-wider text-ink-500 uppercase">
+          <tr class="border-b border-ink-800">
+            <th class="w-[108px] px-5 py-2 font-normal">time</th>
+            <th class="w-[44px] py-2 font-normal">rec</th>
+            <th class="w-[106px] py-2 font-normal">agent_id</th>
+            <th class="w-[112px] py-2 font-normal">call_id</th>
+            <th class="py-2 font-normal">tools</th>
+            <th class="w-[96px] py-2 text-right font-normal">tokens</th>
+            <th class="w-[76px] py-2 text-right font-normal">duration</th>
+            <th class="w-[176px] py-2 pr-5 pl-4 font-normal">outcome</th>
+          </tr>
+        </thead>
+        <tbody data-rows class="divide-y divide-ink-850"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- detail -->
+  <aside data-detail class="w-[280px] shrink-0 border-l border-ink-800 bg-ink-900/60 p-5 text-[12px]">
+    <p class="font-mono text-[11px] text-ink-500">Select a record</p>
+  </aside>
+</div>

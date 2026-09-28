@@ -1,0 +1,209 @@
+@import "tailwindcss";
+
+@source "../public";
+
+/* Self-hosted fonts: the page makes no third-party requests. */
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fonts/inter-latin-wght-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/jetbrains-mono-latin-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/jetbrains-mono-latin-500-normal.woff2") format("woff2");
+}
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Surfaces, derived from the logo's slate (#1c2530). */
+  --color-ink-950: #1e293b;
+  --color-ink-900: #243044;
+  --color-ink-850: #2a374b;
+  --color-ink-800: #334155;
+  --color-ink-700: #3d4b60;
+  --color-ink-600: #4b5a70;
+  --color-ink-500: #7c8aa0;
+  --color-ink-400: #9aa7b8;
+  --color-ink-300: #c3ccd8;
+  --color-ink-200: #dde3ea;
+  --color-ink-100: #eef2f6;
+
+  /* Brand teal, from the shield. */
+  --color-keeper-300: #7ee8d8;
+  --color-keeper-400: #2dd4bf;
+  --color-keeper-500: #1fae9c;
+  --color-keeper-700: #17766c;
+  --color-keeper-900: #134e4a;
+
+  /* Signal colours, used sparingly for allow / deny / alert. */
+  --color-allow: #4ade80;
+  --color-deny: #f87171;
+  --color-alert: #fbbf24;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-ink-950 font-sans text-ink-200 antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+  ::selection {
+    @apply bg-keeper-400/30 text-white;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-keeper-400;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply font-mono text-xs tracking-widest text-keeper-400 uppercase;
+  }
+  .section-title {
+    @apply mt-4 text-3xl font-semibold tracking-tight text-white text-balance sm:text-4xl;
+  }
+  .section-lead {
+    @apply mt-5 max-w-2xl text-lg/8 text-ink-300 text-pretty;
+  }
+  .panel {
+    @apply rounded-lg border border-ink-700 bg-ink-900;
+  }
+  .code {
+    @apply overflow-x-auto font-mono text-[13px]/6 text-ink-200;
+  }
+  .btn-primary {
+    @apply inline-flex items-center gap-2 rounded-md bg-keeper-400 px-4 py-2.5 text-sm font-semibold text-ink-950 transition hover:bg-keeper-300;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 rounded-md border border-ink-600 px-4 py-2.5 text-sm font-medium text-ink-100 transition hover:border-ink-400 hover:bg-ink-800;
+  }
+  .badge {
+    @apply inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 font-mono text-[11px] tracking-wide uppercase;
+  }
+  .badge-live {
+    @apply border-allow/30 bg-allow/10 text-allow;
+  }
+  .badge-next {
+    @apply border-ink-600 bg-ink-800 text-ink-300;
+  }
+  .tab {
+    @apply cursor-pointer border-b-2 border-transparent px-3 py-2.5 font-mono text-xs text-ink-400 transition hover:text-ink-100;
+  }
+  .tab[aria-selected="true"] {
+    @apply border-keeper-400 text-white;
+  }
+  .field {
+    @apply mt-2 block w-full rounded-md border border-ink-600 bg-ink-950 px-3 py-2 text-sm text-white placeholder:text-ink-500 focus:border-keeper-400 focus:outline-none;
+  }
+
+
+  /* Platform preview */
+  .app-nav {
+    @apply flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left text-ink-300 transition hover:bg-ink-800 hover:text-white;
+  }
+  .app-nav[aria-selected="true"] {
+    @apply bg-ink-800 text-white;
+  }
+  .agent-chip {
+    @apply rounded-full border border-ink-700 px-2.5 py-1 text-ink-500 transition hover:border-ink-500;
+  }
+  .agent-chip[aria-pressed="true"] {
+    @apply border-keeper-700 bg-keeper-900/60 text-keeper-300;
+  }
+  .rec-filter {
+    @apply border-b-2 border-transparent px-3 py-2.5 text-ink-400 hover:text-ink-100;
+  }
+  .rec-filter:first-child { @apply pl-0; }
+  .rec-filter[aria-selected="true"] {
+    @apply border-keeper-400 text-white;
+  }
+  .rec-filter span[data-count] {
+    @apply ml-1 rounded bg-ink-800 px-1.5 py-px text-ink-300;
+  }
+  .rec-row {
+    @apply cursor-pointer transition-colors hover:bg-ink-850;
+  }
+  .rec-row[aria-selected="true"] {
+    @apply bg-keeper-900/40;
+  }
+  .rec-row[aria-selected="true"] td:first-child {
+    box-shadow: inset 2px 0 0 var(--color-keeper-400);
+  }
+
+  /* Syntax tokens for the hand-highlighted code samples. */
+  .tk-k { @apply text-keeper-300; }  /* keys */
+  .tk-s { @apply text-ink-100; }     /* strings */
+  .tk-n { @apply text-alert; }       /* numbers, literals */
+  .tk-c { @apply text-ink-500; }     /* comments, punctuation */
+  .tk-p { @apply text-keeper-400; }  /* prompt */
+}
+
+/* A faint engineering grid behind the hero. */
+.grid-bg {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 40%, transparent 100%);
+}
+
+/* HTMX: fade swapped-in panels, show indicators while loading. */
+[data-panel] > * { transition: opacity 160ms ease-out; }
+[data-panel] > .htmx-added { opacity: 0; }
+.htmx-indicator { opacity: 0; transition: opacity 150ms; }
+.htmx-request .htmx-indicator, .htmx-request.htmx-indicator { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; animation: none !important; }
+}
+
+/* New live record: brief teal wash. */
+@keyframes rec-in { from { background-color: rgb(45 212 191 / 0.14); } to { background-color: transparent; } }
+.rec-new { animation: rec-in 1.2s ease-out; }
+@keyframes live-ping { 75%, 100% { transform: scale(2.2); opacity: 0; } }
+.live-ping { animation: live-ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite; }
+.is-paused .live-ping { animation: none; opacity: 0; }
+.is-paused .bg-allow { background-color: var(--color-alert); }
+
+/* Honeycomb host map */
+.hx { cursor: pointer; stroke-width: 1.4; transition: fill 250ms, transform 150ms; transform-box: fill-box; transform-origin: center; }
+.hx:hover, .hx:focus-visible { outline: none; transform: scale(1.12); stroke: #ffffff !important; }
+.hx.is-selected { stroke: #ffffff !important; stroke-width: 2; }
+.hx-lbl { fill: rgb(255 255 255 / 0.55); pointer-events: none; }
+.hx-cell:hover .hx-lbl { fill: #ffffff; }
+
+/* Hero flow diagram */
+.fl-cell rect { fill: #2a374b; stroke: #4b5a70; transition: fill 120ms, stroke 120ms; }
+.fl-cell .fl-num { fill: #7c8aa0; }
+.fl-cell .fl-lbl { fill: #c3ccd8; }
+.fl-cell.on rect { fill: #134e4a; stroke: #2dd4bf; }
+.fl-cell.on .fl-lbl { fill: #ffffff; }
+.fl-cell.deny rect { fill: #4a2c36; stroke: #f87171; }
+.fl-cell.deny .fl-lbl, .fl-cell.deny .fl-num { fill: #fca5a5; }
+.fl-node rect { transition: stroke 200ms, fill 200ms; }
+.fl-node.is-active rect { stroke: #2dd4bf; }
+#fl-flag { transition: opacity 200ms; }
+.fl-die { animation: fl-die 1.2s ease-out forwards; }
+@keyframes fl-die { 0%, 40% { opacity: 1; } 100% { opacity: 0; } }
+
+/* Code panels scroll inside themselves instead of widening the page. */
+.panel { min-width: 0; }

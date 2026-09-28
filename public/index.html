@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AgentKeeper — Governance for AI agents</title>
+  <meta name="description" content="AgentKeeper is the security, privacy and observability layer for AI agents. It governs what agents do with tools, files and credentials, and runs on your infrastructure or in the EU.">
+  <meta name="theme-color" content="#1e293b">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script src="assets/js/htmx.min.js" defer></script>
+  <script src="assets/js/site.js" defer></script>
+</head>
+<body>
+
+<!-- ───────────────────────── Navigation ───────────────────────── -->
+<header class="sticky top-0 z-40 border-b border-ink-800/80 bg-ink-950/85 backdrop-blur">
+  <nav class="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6" aria-label="Main">
+    <a href="#top" class="flex items-center gap-2.5">
+      <img src="assets/logo.svg" alt="" class="size-7">
+      <span class="font-semibold tracking-tight text-white">AgentKeeper</span>
+    </a>
+    <div class="hidden items-center gap-7 text-sm text-ink-300 md:flex">
+      <a href="#problem" class="hover:text-white">Problem</a>
+      <a href="#pipeline" class="hover:text-white">Pipeline</a>
+      <a href="#platform" class="hover:text-white">Platform</a>
+      <a href="#traces" class="hover:text-white">Traces</a>
+      <a href="#integrate" class="hover:text-white">Adoption</a>
+      <a href="#sovereignty" class="hover:text-white">Sovereignty</a>
+      <a href="#roadmap" class="hover:text-white">Roadmap</a>
+    </div>
+    <a href="#pilot" class="btn-primary !py-2">Request a pilot</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- ───────────────────────── Hero ───────────────────────── -->
+<section class="relative overflow-hidden border-b border-ink-800">
+  <div class="grid-bg pointer-events-none absolute inset-0" aria-hidden="true"></div>
+  <div class="relative mx-auto max-w-6xl px-4 pt-20 pb-20 sm:px-6 lg:pt-24">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-[1.6fr_1fr] lg:items-end">
+      <div>
+        <p class="inline-flex items-center gap-2 rounded-full border border-ink-700 bg-ink-900 px-3 py-1 font-mono text-xs text-ink-300">
+          <span class="size-1.5 rounded-full bg-keeper-400"></span>
+          Early access · Self-hosted or hosted in the EU
+        </p>
+        <h1 class="mt-6 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-[3.25rem] lg:leading-[1.1]">
+          See everything your AI&nbsp;agents&nbsp;do. <span class="block text-keeper-400">Stop what they shouldn't.</span>
+        </h1>
+      </div>
+      <div>
+        <p class="text-lg/8 text-ink-300 text-pretty">
+          AgentKeeper sits between your agents and the models they call. It identifies every agent, records every
+          tool call, and stops risky calls before they leave your network.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#pilot" class="btn-primary">Start a 30-day pilot <span aria-hidden="true">→</span></a>
+          <a href="#platform" class="btn-ghost">See the platform</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- How it works: animated flow -->
+    <figure class="panel mt-14 overflow-hidden bg-ink-950/70 shadow-2xl shadow-black/25">
+      <div class="flex items-center justify-between border-b border-ink-800 px-5 py-2.5 font-mono text-[11px]">
+        <span class="text-ink-400">how it works</span>
+        <button type="button" id="flow-toggle" class="text-ink-500 hover:text-ink-200" aria-pressed="false">pause</button>
+      </div>
+      <div class="p-4 sm:p-6">
+<svg id="flow" viewBox="0 0 1200 460" class="block w-full font-mono" role="img" aria-labelledby="flow-title flow-desc">
+<title id="flow-title">How AgentKeeper works</title><desc id="flow-desc">Five agents, including Claude Code, send calls to one AgentKeeper gateway. Each call passes six stages: identify, policy, monitor, filter, limit and audit. Allowed calls go on to Anthropic, OpenAI or DeepSeek, and their responses come back. Denied calls stop at the stage that refused them.</desc>
+<g fill="none" stroke-width="1.25">
+<path id="fin0" d="M232 62 C 322 62, 330 222, 410 222" stroke="#4b5a70" stroke-opacity="1"/>
+<path id="fin1" d="M232 146 C 322 146, 330 222, 410 222" stroke="#4b5a70" stroke-opacity="1"/>
+<path id="fin2" d="M232 230 C 322 230, 330 222, 410 222" stroke="#4b5a70" stroke-opacity="1"/>
+<path id="fin3" d="M232 314 C 322 314, 330 222, 410 222" stroke="#4b5a70" stroke-opacity="1"/>
+<path id="fin4" d="M232 398 C 322 398, 330 222, 410 222" stroke="#f87171" stroke-opacity="0.55" stroke-dasharray="4 4"/>
+<path id="fout0" d="M790 222 C 870 222, 880 130, 968 130" stroke="#4b5a70"/>
+<path id="fout1" d="M790 222 C 870 222, 880 230, 968 230" stroke="#4b5a70"/>
+<path id="fout2" d="M790 222 C 870 222, 880 330, 968 330" stroke="#4b5a70"/>
+<path id="fthru" d="M410 222 L790 222" stroke="#17766c" stroke-opacity=".6"/>
+</g>
+<g font-size="12">
+<text x="20" y="22" fill="#7c8aa0" font-size="10" letter-spacing="1.5">AGENTS · IN YOUR SANDBOXES</text>
+<g class="fl-node" data-agent="0"><rect x="20" y="36" width="212" height="52" rx="7" fill="#243044" stroke="#4b5a70"/><text x="36" y="58" fill="#eef2f6" font-weight="500">Claude Code</text><text x="36" y="75" fill="#9aa7b8" font-size="10.5">coding agent · dev laptops</text><circle cx="214" cy="54" r="3" fill="#4ade80" fill-opacity=".8"/></g>
+<g class="fl-node" data-agent="1"><rect x="20" y="120" width="212" height="52" rx="7" fill="#243044" stroke="#4b5a70"/><text x="36" y="142" fill="#eef2f6" font-weight="500">review-bot</text><text x="36" y="159" fill="#9aa7b8" font-size="10.5">opencode</text><circle cx="214" cy="138" r="3" fill="#4ade80" fill-opacity=".8"/></g>
+<g class="fl-node" data-agent="2"><rect x="20" y="204" width="212" height="52" rx="7" fill="#243044" stroke="#4b5a70"/><text x="36" y="226" fill="#eef2f6" font-weight="500">support-bot</text><text x="36" y="243" fill="#9aa7b8" font-size="10.5">Anthropic SDK</text><circle cx="214" cy="222" r="3" fill="#4ade80" fill-opacity=".8"/></g>
+<g class="fl-node" data-agent="3"><rect x="20" y="288" width="212" height="52" rx="7" fill="#243044" stroke="#4b5a70"/><text x="36" y="310" fill="#eef2f6" font-weight="500">claims-triage</text><text x="36" y="327" fill="#9aa7b8" font-size="10.5">OpenAI SDK</text><circle cx="214" cy="306" r="3" fill="#4ade80" fill-opacity=".8"/></g>
+<g class="fl-node" data-agent="4"><rect x="20" y="372" width="212" height="52" rx="7" fill="#3b2a35" stroke="#f87171" stroke-opacity=".55" stroke-dasharray="4 3"/><text x="36" y="394" fill="#fca5a5" font-weight="500">unknown</text><text x="36" y="411" fill="#f87171" fill-opacity=".75" font-size="10.5">10.4.2.19 · no credential</text></g>
+</g>
+<g>
+<rect x="410" y="96" width="380" height="268" rx="12" fill="#134e4a" fill-opacity=".28" stroke="#2dd4bf" stroke-opacity=".8"/>
+<path d="M436 124 l11 4.2 v9.3 c0 6.2 -4.9 10.3 -11 13.5 c-6.1 -3.2 -11 -7.3 -11 -13.5 v-9.3 z" fill="#2dd4bf"/>
+<text x="460" y="134" fill="#ffffff" font-size="15" font-weight="500" font-family="Inter, sans-serif">AgentKeeper Gateway</text>
+<text x="460" y="151" fill="#9aa7b8" font-size="10.5">one endpoint · provider keys held here</text>
+<text x="774" y="134" fill="#4ade80" font-size="10" text-anchor="end">● fail-closed</text>
+<g class="fl-cell" data-stage="0"><rect x="426" y="198" width="54" height="48" rx="5"/><text x="453" y="216" text-anchor="middle" font-size="9.5" class="fl-num">01</text><text x="453" y="233" text-anchor="middle" font-size="10" class="fl-lbl">identify</text></g>
+<g class="fl-cell" data-stage="1"><rect x="485" y="198" width="54" height="48" rx="5"/><text x="512" y="216" text-anchor="middle" font-size="9.5" class="fl-num">02</text><text x="512" y="233" text-anchor="middle" font-size="10" class="fl-lbl">policy</text></g>
+<g class="fl-cell" data-stage="2"><rect x="544" y="198" width="54" height="48" rx="5"/><text x="571" y="216" text-anchor="middle" font-size="9.5" class="fl-num">03</text><text x="571" y="233" text-anchor="middle" font-size="10" class="fl-lbl">monitor</text></g>
+<g class="fl-cell" data-stage="3"><rect x="603" y="198" width="54" height="48" rx="5"/><text x="630" y="216" text-anchor="middle" font-size="9.5" class="fl-num">04</text><text x="630" y="233" text-anchor="middle" font-size="10" class="fl-lbl">filter</text></g>
+<g class="fl-cell" data-stage="4"><rect x="662" y="198" width="54" height="48" rx="5"/><text x="689" y="216" text-anchor="middle" font-size="9.5" class="fl-num">05</text><text x="689" y="233" text-anchor="middle" font-size="10" class="fl-lbl">limit</text></g>
+<g class="fl-cell" data-stage="5"><rect x="721" y="198" width="54" height="48" rx="5"/><text x="748" y="216" text-anchor="middle" font-size="9.5" class="fl-num">06</text><text x="748" y="233" text-anchor="middle" font-size="10" class="fl-lbl">audit</text></g>
+<text id="fl-flag" x="600" y="186" text-anchor="middle" font-size="11" fill="#f87171" opacity="0"></text>
+<line x1="426" y1="266" x2="774" y2="266" stroke="#17766c" stroke-opacity=".5"/>
+<text x="426" y="284" fill="#7c8aa0" font-size="9.5" letter-spacing="1.5">AUDIT · EVERY CALL, ALLOWED OR DENIED</text>
+<text class="fl-log" x="426" y="305" font-size="10.5" fill="#c3ccd8" opacity="1"></text>
+<text class="fl-log" x="426" y="322" font-size="10.5" fill="#c3ccd8" opacity="0.65"></text>
+<text class="fl-log" x="426" y="339" font-size="10.5" fill="#c3ccd8" opacity="0.35"></text>
+</g>
+<g font-size="12">
+<text x="968" y="22" fill="#7c8aa0" font-size="10" letter-spacing="1.5">LLM PROVIDERS</text>
+<g class="fl-node" data-provider="0"><rect x="968" y="100" width="212" height="60" rx="7" fill="#2a374b" stroke="#7c8aa0"/><text x="984" y="124" fill="#eef2f6" font-weight="500" font-family="Inter, sans-serif" font-size="14">Anthropic</text><text x="984" y="143" fill="#9aa7b8" font-size="10.5">api.anthropic.com</text></g>
+<g class="fl-node" data-provider="1"><rect x="968" y="200" width="212" height="60" rx="7" fill="#2a374b" stroke="#7c8aa0"/><text x="984" y="224" fill="#eef2f6" font-weight="500" font-family="Inter, sans-serif" font-size="14">OpenAI</text><text x="984" y="243" fill="#9aa7b8" font-size="10.5">api.openai.com</text></g>
+<g class="fl-node" data-provider="2"><rect x="968" y="300" width="212" height="60" rx="7" fill="#2a374b" stroke="#7c8aa0"/><text x="984" y="324" fill="#eef2f6" font-weight="500" font-family="Inter, sans-serif" font-size="14">DeepSeek</text><text x="984" y="343" fill="#9aa7b8" font-size="10.5">api.deepseek.com</text></g>
+</g>
+<g id="fl-dots"></g>
+</svg>
+      </div>
+      <figcaption class="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-ink-800 px-5 py-3 font-mono text-[10.5px] text-ink-500">
+        <span class="flex items-center gap-2"><span class="size-2 rounded-full bg-keeper-300"></span>call, allowed</span>
+        <span class="flex items-center gap-2"><span class="size-2 rounded-full bg-ink-300"></span>response</span>
+        <span class="flex items-center gap-2"><span class="size-2 rounded-full bg-deny"></span>denied at a stage</span>
+        <span class="sm:ml-auto">Illustrative. Anthropic is supported today; OpenAI and DeepSeek are on the roadmap.</span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ───────────────────────── Problem ───────────────────────── -->
+<section id="problem" class="border-b border-ink-800">
+  <div class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+    <p class="eyebrow">01 — The problem</p>
+    <h2 class="section-title max-w-3xl">The sandbox protects the host. Nothing protects your data.</h2>
+    <p class="section-lead">
+      Agents no longer just answer prompts. They call tools, read and write files, and use credentials
+      on their own. Docker, gVisor or Firecracker stop an agent from escaping to the kernel. They do not stop it
+      from sending a customer record to a third-party model.
+    </p>
+
+    <div class="mt-14 grid grid-cols-1 gap-5 md:grid-cols-2">
+      <article class="panel p-7">
+        <div class="flex items-center gap-3">
+          <span class="font-mono text-xs text-deny">FAILURE MODE A</span>
+        </div>
+        <h3 class="mt-3 text-xl font-semibold text-white">Leakage</h3>
+        <p class="mt-3 text-ink-300">
+          There is no gate between your agents and the LLM provider. Secrets, API keys and personal data go straight
+          through in prompts and tool results.
+        </p>
+      </article>
+      <article class="panel p-7">
+        <div class="flex items-center gap-3">
+          <span class="font-mono text-xs text-deny">FAILURE MODE B</span>
+        </div>
+        <h3 class="mt-3 text-xl font-semibold text-white">No audit trail</h3>
+        <p class="mt-3 text-ink-300">
+          In healthcare, legal and finance you need a record of <em>what the agent did</em>: which tools, which data,
+          in what order. API logs only show that a model was called.
+        </p>
+      </article>
+    </div>
+
+    <!-- Sandbox vs AgentKeeper -->
+    <div class="panel mt-5 overflow-hidden">
+      <div class="grid grid-cols-1 md:grid-cols-2">
+        <div class="border-b border-ink-700 p-7 md:border-r md:border-b-0">
+          <p class="font-mono text-xs text-ink-400">sandbox → protects the host</p>
+          <ul class="mt-4 space-y-2 font-mono text-sm text-ink-300">
+            <li><span class="text-ink-500">✕</span> crashing the host</li>
+            <li><span class="text-ink-500">✕</span> reading /etc/passwd</li>
+            <li><span class="text-ink-500">✕</span> unbounded RAM and CPU</li>
+            <li><span class="text-ink-500">✕</span> escaping to the kernel</li>
+          </ul>
+        </div>
+        <div class="bg-keeper-900/20 p-7">
+          <p class="font-mono text-xs text-keeper-400">agentkeeper → protects the system and data</p>
+          <ul class="mt-4 space-y-2 font-mono text-sm text-ink-100">
+            <li><span class="text-keeper-400">✓</span> anonymous callers</li>
+            <li><span class="text-keeper-400">✓</span> calls to models or tools it may not use</li>
+            <li><span class="text-keeper-400">✓</span> secrets and PII leaving in a payload</li>
+            <li><span class="text-keeper-400">✓</span> ten thousand calls a second</li>
+            <li><span class="text-keeper-400">✓</span> leaving no trace</li>
+          </ul>
+        </div>
+      </div>
+      <p class="border-t border-ink-700 px-7 py-4 text-sm text-ink-400">
+        You need both. AgentKeeper does not replace your sandbox; it works with whichever one you already run.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── Pipeline ───────────────────────── -->
+<section id="pipeline" class="border-b border-ink-800 bg-ink-900/40">
+  <div class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+    <p class="eyebrow">02 — The governance pipeline</p>
+    <h2 class="section-title max-w-3xl">Six stages, in a fixed order, on every call.</h2>
+    <p class="section-lead">
+      Every request that leaves an agent passes through the same pipeline before it reaches the provider.
+      The order is set at build time and cannot be changed in config. Any stage can deny the call, and the first denial stops it.
+    </p>
+
+    <ol class="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-ink-700 bg-ink-700 sm:grid-cols-2 lg:grid-cols-3">
+      <li class="bg-ink-900 p-6">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-sm text-keeper-400">01</span>
+          <span class="badge badge-live">available</span>
+        </div>
+        <h3 class="mt-4 font-semibold text-white">Identification</h3>
+        <p class="mt-2 text-sm/6 text-ink-300">Authenticates each call to a registered <code class="font-mono text-ink-100">agent_id</code> using a per-agent API key or a signed JWT. Every failure returns the same generic denial, so callers cannot probe for valid IDs.</p>
+      </li>
+      <li class="bg-ink-900 p-6">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-sm text-keeper-400">02</span>
+          <span class="badge badge-next">roadmap</span>
+        </div>
+        <h3 class="mt-4 font-semibold text-white">Policies</h3>
+        <p class="mt-2 text-sm/6 text-ink-300">Declarative rules in OPA/Rego: which models, tools and resources each agent may use, and when. Policies are code you can review, version and change without redeploying.</p>
+      </li>
+      <li class="bg-ink-900 p-6">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-sm text-keeper-400">03</span>
+          <span class="badge badge-next">roadmap</span>
+        </div>
+        <h3 class="mt-4 font-semibold text-white">Monitoring</h3>
+        <p class="mt-2 text-sm/6 text-ink-300">Call frequency, token volume, latency and error rates per agent, with alerts on anomalous behaviour.</p>
+      </li>
+      <li class="bg-ink-900 p-6">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-sm text-keeper-400">04</span>
+          <span class="badge badge-next">roadmap</span>
+        </div>
+        <h3 class="mt-4 font-semibold text-white">Filtering</h3>
+        <p class="mt-2 text-sm/6 text-ink-300">Detects secrets, API keys, personal data and prompt injection in payloads, and blocks or redacts them while the request is in flight.</p>
+      </li>
+      <li class="bg-ink-900 p-6">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-sm text-keeper-400">05</span>
+          <span class="badge badge-next">roadmap</span>
+        </div>
+        <h3 class="mt-4 font-semibold text-white">Rate limiting</h3>
+        <p class="mt-2 text-sm/6 text-ink-300">Quotas per agent and per model, with burst control. A runaway loop hits a limit before it runs up your bill.</p>
+      </li>
+      <li class="bg-ink-900 p-6">
+        <div class="flex items-center justify-between">
+          <span class="font-mono text-sm text-keeper-400">06</span>
+          <span class="badge badge-live">tracing available</span>
+        </div>
+        <h3 class="mt-4 font-semibold text-white">Audit</h3>
+        <p class="mt-2 text-sm/6 text-ink-300">Records who called, what they did, when, and what each stage decided. Every call is logged, whether it was allowed or denied.</p>
+      </li>
+    </ol>
+
+    <!-- Guarantees -->
+    <ul class="mt-5 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-ink-700 bg-ink-700 text-sm/6 sm:grid-cols-2 lg:grid-cols-4">
+      <li class="bg-ink-900 p-6"><p class="font-medium text-white">Fails closed</p><p class="mt-2 text-ink-300">If a stage errors, the call is denied, not forwarded. A broken governance layer never turns into "allow everything".</p></li>
+      <li class="bg-ink-900 p-6"><p class="font-medium text-white">Keeps your keys</p><p class="mt-2 text-ink-300">Only the gateway holds the provider key. Whatever credential the caller sends is stripped, and nothing is logged.</p></li>
+      <li class="bg-ink-900 p-6"><p class="font-medium text-white">Says little to the caller</p><p class="mt-2 text-ink-300">A denied agent learns which stage refused and gets a request ID. The detailed reason goes only to operators.</p></li>
+      <li class="bg-ink-900 p-6"><p class="font-medium text-white">Invisible when allowed</p><p class="mt-2 text-ink-300">Responses stream as fast as the provider sends them. An allowed call behaves exactly as if AgentKeeper weren't there.</p></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ───────────────────────── Platform ───────────────────────── -->
+<section id="platform" class="border-b border-ink-800">
+  <div class="mx-auto max-w-6xl px-4 pt-24 sm:px-6">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-end">
+      <div>
+        <p class="eyebrow">03 — The platform</p>
+        <h2 class="section-title">Every agent, every call, as it happens.</h2>
+      </div>
+      <p class="text-lg/8 text-ink-300 text-pretty">
+        The optional platform collects records from all your gateways. It shows a live feed of allowed and denied calls
+        and a map of every host and agent your gateways have seen. It is hosted in the EU.
+      </p>
+    </div>
+  </div>
+  <div class="mx-auto max-w-[1320px] px-4 pt-12 pb-24 sm:px-6">
+    <!-- Product window -->
+    <div>
+      <div class="panel overflow-hidden shadow-2xl shadow-black/30 ring-1 ring-white/5">
+        <!-- window chrome -->
+        <div class="flex items-center gap-4 border-b border-ink-700 bg-ink-850 px-4 py-2.5">
+          <div class="flex gap-1.5" aria-hidden="true">
+            <span class="size-2.5 rounded-full bg-ink-600"></span>
+            <span class="size-2.5 rounded-full bg-ink-600"></span>
+            <span class="size-2.5 rounded-full bg-ink-600"></span>
+          </div>
+          <div class="mx-auto flex items-center gap-2 rounded bg-ink-950 px-3 py-1 font-mono text-[11px] text-ink-400">
+            <svg viewBox="0 0 16 16" class="size-3 fill-ink-500" aria-hidden="true"><path d="M5 7V5a3 3 0 1 1 6 0v2h1v7H4V7h1Zm1.5 0h3V5a1.5 1.5 0 0 0-3 0v2Z"/></svg>
+            app.agentkeeper.eu / acme-health / production
+          </div>
+          <span class="hidden font-mono text-[10px] tracking-widest text-ink-500 uppercase sm:block">design preview</span>
+        </div>
+
+        <div class="overflow-x-auto">
+          <div class="flex min-w-[1180px]">
+            <!-- app sidebar: HTMX swaps the view -->
+            <aside class="w-48 shrink-0 border-r border-ink-700 bg-ink-900 p-3">
+              <div class="flex items-center gap-2 px-2 py-1.5">
+                <img src="assets/logo.svg" alt="" class="size-5">
+                <span class="text-sm font-semibold text-white">AgentKeeper</span>
+              </div>
+              <p class="mt-5 px-2 font-mono text-[10px] tracking-widest text-ink-500 uppercase">Observe</p>
+              <nav role="tablist" aria-label="Platform views" class="mt-2 space-y-0.5 text-[13px]">
+                <button role="tab" aria-selected="true" class="app-nav"
+                        hx-get="partials/app-records.html" hx-target="#app-view">
+                  <span class="size-1.5 rounded-full bg-allow"></span> Live records
+                </button>
+                <button role="tab" aria-selected="false" class="app-nav"
+                        hx-get="partials/app-map.html" hx-target="#app-view">
+                  <span class="size-1.5 rounded-full bg-keeper-400"></span> Agent map
+                </button>
+              </nav>
+              <p class="mt-5 px-2 font-mono text-[10px] tracking-widest text-ink-500 uppercase">Govern</p>
+              <ul class="mt-2 space-y-0.5 text-[13px] text-ink-500">
+                <li class="px-2 py-1.5">Agents</li>
+                <li class="px-2 py-1.5">Policies</li>
+                <li class="px-2 py-1.5">Audit exports</li>
+              </ul>
+              <div class="mt-8 rounded-md border border-ink-700 bg-ink-950 p-2.5 font-mono text-[10px]/4 text-ink-400">
+                <div class="flex items-center gap-1.5 text-ink-200"><span class="size-1.5 rounded-full bg-allow"></span>2 gateways online</div>
+                <div class="mt-1">region eu-west · data in EU</div>
+              </div>
+            </aside>
+
+            <!-- view -->
+            <div id="app-view" data-panel class="min-h-[560px] flex-1 bg-ink-950"
+                 hx-get="partials/app-records.html" hx-trigger="load">
+              <p class="p-6 font-mono text-xs text-ink-500">Loading…</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="mt-4 text-center font-mono text-[11px] text-ink-500">
+        Design preview of the AgentKeeper platform. Sample data; every field comes from the gateway's
+        <span class="text-ink-300">agentkeeper.trace/v1</span> record.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── Traces ───────────────────────── -->
+<section id="traces" class="border-b border-ink-800">
+  <div class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+    <div class="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:items-end">
+      <div>
+        <p class="eyebrow">04 — Session traces</p>
+        <h2 class="section-title">A record of what the agent did. Nothing it said.</h2>
+      </div>
+      <p class="text-lg/8 text-ink-300 text-pretty">
+        Each model call, each tool the model asked for, and each result sent back, in order and on one timeline.
+        When something goes wrong, you can see which step caused it without reading a single prompt.
+      </p>
+    </div>
+
+    <div class="panel mt-12 overflow-hidden">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-ink-700 bg-ink-850 px-5 py-3 font-mono text-[11px]">
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
+          <span class="text-white">session 2a1457d7…</span>
+          <span class="text-ink-400">agent <span class="text-ink-100">build-bot</span></span>
+          <span class="text-ink-400">host <span class="text-ink-100">ci-runner-03</span></span>
+          <span class="text-ink-400">4 calls · 3 tool calls · 17.4 s</span>
+        </div>
+        <span class="text-[10px] tracking-widest text-ink-500 uppercase">design preview</span>
+      </div>
+      <div class="overflow-x-auto">
+        <div class="min-w-[860px] font-mono text-[11.5px]">
+          <div class="grid grid-cols-[250px_1fr_150px] border-b border-ink-800 text-[10px] text-ink-500">
+            <div class="px-5 py-2 tracking-wider uppercase">step</div>
+            <div class="relative py-2"><span class="absolute -translate-x-1/2" style="left:0.0%">0s</span><span class="absolute -translate-x-1/2" style="left:25.0%">5s</span><span class="absolute -translate-x-1/2" style="left:50.0%">10s</span><span class="absolute -translate-x-1/2" style="left:75.0%">15s</span><span class="absolute -translate-x-1/2" style="left:100.0%">20s</span></div>
+            <div class="px-5 py-2 text-right tracking-wider uppercase">tokens / size</div>
+          </div>
+          <div class="relative">
+            <div class="pointer-events-none absolute inset-y-0 right-[150px] left-[250px]" aria-hidden="true"><div class="absolute inset-y-0 border-l border-ink-800/70" style="left:0.0%"></div><div class="absolute inset-y-0 border-l border-ink-800/70" style="left:25.0%"></div><div class="absolute inset-y-0 border-l border-ink-800/70" style="left:50.0%"></div><div class="absolute inset-y-0 border-l border-ink-800/70" style="left:75.0%"></div><div class="absolute inset-y-0 border-l border-ink-800/70" style="left:100.0%"></div></div>
+          <div class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850 ">
+            <div class="truncate px-5 py-2"><span class="text-keeper-300">LLM</span> <span class="text-ink-200">claude-opus-5</span> <span class="text-ink-600">ak_b55fa120…</span></div>
+            <div class="relative h-8"><div class="absolute inset-y-1.5 rounded-sm bg-keeper-700/70 ring-1 ring-keeper-500/40" style="left:0.00%;width:17.50%"><div class="h-full rounded-l-sm bg-keeper-400/30" style="width:40.0%"></div></div></div>
+            <div class="px-5 text-right text-ink-400">58.1k → 141</div>
+          </div>
+          <div class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850 ">
+            <div class="truncate px-5 py-2"><span class="pl-4 text-ink-500">└</span> <span class="text-ink-400">tool</span> <span class="text-ink-100">Read</span> <span class="text-ink-600">toolu_018C6A…</span></div>
+            <div class="relative h-8"><div class="absolute inset-y-2 rounded-sm border border-dashed border-ink-500 bg-ink-800" style="left:17.50%;width:2.00%"></div></div>
+            <div class="px-5 text-right text-ink-400">1.2 kB</div>
+          </div>
+          <div class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850 ">
+            <div class="truncate px-5 py-2"><span class="text-keeper-300">LLM</span> <span class="text-ink-200">claude-opus-5</span> <span class="text-ink-600">ak_ed1c9b51…</span></div>
+            <div class="relative h-8"><div class="absolute inset-y-1.5 rounded-sm bg-keeper-700/70 ring-1 ring-keeper-500/40" style="left:19.50%;width:21.50%"><div class="h-full rounded-l-sm bg-keeper-400/30" style="width:25.6%"></div></div></div>
+            <div class="px-5 text-right text-ink-400">59.3k → 212</div>
+          </div>
+          <div class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850 ">
+            <div class="truncate px-5 py-2"><span class="pl-4 text-ink-500">└</span> <span class="text-ink-400">tool</span> <span class="text-ink-100">Bash</span> <span class="text-ink-600">toolu_01Hq2P…</span></div>
+            <div class="relative h-8"><div class="absolute inset-y-2 rounded-sm border border-dashed border-ink-500 bg-ink-800" style="left:41.00%;width:22.00%"></div></div>
+            <div class="px-5 text-right text-ink-400">542 B</div>
+          </div>
+          <div class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850 ">
+            <div class="truncate px-5 py-2"><span class="text-keeper-300">LLM</span> <span class="text-ink-200">claude-opus-5</span> <span class="text-ink-600">ak_7c02e4f9…</span></div>
+            <div class="relative h-8"><div class="absolute inset-y-1.5 rounded-sm bg-keeper-700/70 ring-1 ring-keeper-500/40" style="left:63.00%;width:22.50%"><div class="h-full rounded-l-sm bg-keeper-400/30" style="width:35.6%"></div></div></div>
+            <div class="px-5 text-right text-ink-400">60.1k → 96</div>
+          </div>
+          <div class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850 ">
+            <div class="truncate px-5 py-2"><span class="pl-4 text-ink-500">└</span> <span class="text-ink-400">tool</span> <span class="text-ink-100">Read</span> <span class="text-ink-600">toolu_01Nf8X…</span></div>
+            <div class="relative h-8"><div class="absolute inset-y-2 rounded-sm border border-dashed border-ink-500 bg-ink-800" style="left:85.50%;width:1.50%"></div></div>
+            <div class="px-5 text-right text-ink-400">311 B</div>
+          </div>
+          <div class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850 bg-deny/[0.05]">
+            <div class="truncate px-5 py-2"><span class="text-deny">LLM</span> <span class="text-ink-200">claude-opus-5</span> <span class="text-ink-600">ak_91d4a0c3…</span></div>
+            <div class="relative h-8"><div class="absolute top-1/2 flex -translate-y-1/2 translate-x-2 flex-row-reverse items-center gap-2" style="right:13.00%"><span class="grid size-4 place-items-center rounded-full border border-deny bg-ink-950 text-[9px] text-deny">✕</span><span class="whitespace-nowrap text-deny">denied before reaching the provider · 403 filtering · secret in tool result</span></div></div>
+            <div class="px-5 text-right text-deny">not sent</div>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-ink-700 px-5 py-3 font-mono text-[10.5px] text-ink-500">
+        <span class="flex items-center gap-2"><span class="h-2.5 w-5 rounded-sm bg-keeper-700/70 ring-1 ring-keeper-500/40"></span>model call</span>
+        <span class="flex items-center gap-2"><span class="h-2.5 w-2 rounded-sm bg-keeper-400/40"></span>time to first byte</span>
+        <span class="flex items-center gap-2"><span class="h-2.5 w-5 rounded-sm border border-dashed border-ink-500 bg-ink-800"></span>tool run by the agent</span>
+        <span class="ml-auto">Linked by the provider's tool-call IDs. No prompts, arguments or results are stored.</span>
+      </div>
+    </div>
+
+    <dl class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <div>
+        <dt class="font-medium text-white">Metadata, never content</dt>
+        <dd class="mt-2 text-sm/6 text-ink-400">Tool names, sizes and timings are recorded. What the prompt, arguments or results said is not.</dd>
+      </div>
+      <div>
+        <dt class="font-medium text-white">Keyed fingerprints</dt>
+        <dd class="mt-2 text-sm/6 text-ink-400">An HMAC under your own key shows when the same content comes back, without revealing what it was.</dd>
+      </div>
+      <div>
+        <dt class="font-medium text-white">Stateless gateways</dt>
+        <dd class="mt-2 text-sm/6 text-ink-400">Restart the gateway or scale it out behind a load balancer, and the traces come out the same.</dd>
+      </div>
+      <div>
+        <dt class="font-medium text-white">Open, versioned format</dt>
+        <dd class="mt-2 text-sm/6 text-ink-400">Use our platform, or send the records to the observability stack you already run.</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ───────────────────────── Integrate ───────────────────────── -->
+<section id="integrate" class="border-b border-ink-800 bg-ink-900/40">
+  <div class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+    <p class="eyebrow">05 — Adoption</p>
+    <h2 class="section-title max-w-3xl">Change one URL. Your agents keep working.</h2>
+    <p class="section-lead">
+      Point your agents at AgentKeeper instead of the model provider. There's no SDK to add and no agent code to change.
+      Claude Code, opencode and any Anthropic SDK work as they are.
+    </p>
+
+    <ol class="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-ink-700 bg-ink-700 md:grid-cols-3">
+      <li class="bg-ink-900 p-7">
+        <span class="font-mono text-sm text-keeper-400">step 1</span>
+        <h3 class="mt-3 font-semibold text-white">Run the gateway</h3>
+        <p class="mt-2 text-sm/6 text-ink-300">A single Go binary or container, in your cloud, on-prem, or next to the agent. The provider API key stays in the gateway.</p>
+      </li>
+      <li class="bg-ink-900 p-7">
+        <span class="font-mono text-sm text-keeper-400">step 2</span>
+        <h3 class="mt-3 font-semibold text-white">Register your agents</h3>
+        <p class="mt-2 text-sm/6 text-ink-300">Give each agent its own credential. Agents never hold a real provider key, so there's nothing for them to leak.</p>
+      </li>
+      <li class="bg-ink-900 p-7">
+        <span class="font-mono text-sm text-keeper-400">step 3</span>
+        <h3 class="mt-3 font-semibold text-white">Change the base URL</h3>
+        <p class="mt-2 text-sm/6 text-ink-300">Point the agent's base URL at the gateway. Every call and every tool call is identified and traced from that point on.</p>
+        <p class="mt-4 truncate rounded border border-ink-700 bg-ink-950 px-3 py-2 font-mono text-xs text-ink-200">
+          <span class="text-keeper-400">ANTHROPIC_BASE_URL</span>=https://gw.internal
+        </p>
+      </li>
+    </ol>
+
+    <!-- Architecture: gateway required, platform optional -->
+    <div class="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
+      <article class="panel p-7">
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold text-white">The gateway</h3>
+          <span class="badge badge-live">required</span>
+        </div>
+        <p class="mt-3 text-sm/6 text-ink-300">
+          Enforces policy and records activity in real time, as the calls happen. Run it yourself, or let us host it in the EU.
+        </p>
+        <ul class="mt-5 grid grid-cols-1 gap-2 font-mono text-xs text-ink-400 sm:grid-cols-3">
+          <li class="rounded border border-ink-700 px-3 py-2"><span class="text-ink-100">sidecar</span><br>one per pod</li>
+          <li class="rounded border border-ink-700 px-3 py-2"><span class="text-ink-100">central</span><br>one per fleet</li>
+          <li class="rounded border border-ink-700 px-3 py-2"><span class="text-ink-100">edge</span><br>no cloud at all</li>
+        </ul>
+      </article>
+      <article class="panel p-7">
+        <div class="flex items-center justify-between">
+          <h3 class="font-semibold text-white">The platform</h3>
+          <span class="badge badge-next">optional</span>
+        </div>
+        <p class="mt-3 text-sm/6 text-ink-300">
+          Collects records from all your gateways and shows the live feed, the agent map and session traces.
+          It is hosted in the EU. You can use your own observability stack instead.
+        </p>
+        <p class="mt-5 font-mono text-xs text-ink-500">JSON lines → platform, or any log shipper → your SIEM</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── Sovereignty ───────────────────────── -->
+<section id="sovereignty" class="border-b border-ink-800">
+  <div class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+    <div class="grid grid-cols-1 gap-14 lg:grid-cols-2">
+      <div>
+        <p class="eyebrow">06 — Sovereignty</p>
+        <h2 class="section-title">Your agents, your infrastructure, your jurisdiction.</h2>
+        <p class="section-lead">
+          Governance should not require sending your traffic to yet another third party.
+          AgentKeeper is designed so that you choose where the data goes, and it stays there.
+        </p>
+      </div>
+      <div class="grid grid-cols-1 gap-px self-end overflow-hidden rounded-lg border border-ink-700 bg-ink-700 sm:grid-cols-2">
+        <div class="bg-ink-900 p-6">
+          <p class="font-mono text-xs text-ink-500">deploy</p>
+          <p class="mt-2 font-medium text-white">Self-hosted or hosted in the EU</p>
+          <p class="mt-2 text-sm/6 text-ink-400">Run it on your own cloud or on-prem. If you prefer SaaS, it is hosted in Europe so data stays in the region.</p>
+        </div>
+        <div class="bg-ink-900 p-6">
+          <p class="font-mono text-xs text-ink-500">intercept</p>
+          <p class="mt-2 font-medium text-white">No TLS interception</p>
+          <p class="mt-2 text-sm/6 text-ink-400">Agents route to AgentKeeper explicitly. We do not spoof DNS or decrypt traffic; that approach is a GDPR grey area and we avoid it.</p>
+        </div>
+        <div class="bg-ink-900 p-6">
+          <p class="font-mono text-xs text-ink-500">standards</p>
+          <p class="mt-2 font-medium text-white">Open formats, no lock-in</p>
+          <p class="mt-2 text-sm/6 text-ink-400">OPA/Rego for policies, W3C baggage for sessions, versioned JSON for traces. Bring your own observability stack.</p>
+        </div>
+        <div class="bg-ink-900 p-6">
+          <p class="font-mono text-xs text-ink-500">minimise</p>
+          <p class="mt-2 font-medium text-white">Data minimisation by default</p>
+          <p class="mt-2 text-sm/6 text-ink-400">Traces contain metadata and fingerprints, never payload content. This page itself makes no third-party requests.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Regulatory map -->
+    <div class="panel mt-14 overflow-x-auto">
+      <table class="w-full min-w-[640px] text-left text-sm">
+        <caption class="border-b border-ink-700 px-6 py-4 text-left font-mono text-xs tracking-widest text-ink-400 uppercase">
+          Built for regulated work
+        </caption>
+        <thead class="font-mono text-xs text-ink-500">
+          <tr class="border-b border-ink-700">
+            <th scope="col" class="px-6 py-3 font-normal">Framework</th>
+            <th scope="col" class="px-6 py-3 font-normal">What it asks for</th>
+            <th scope="col" class="px-6 py-3 font-normal">What AgentKeeper records or enforces</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-ink-800">
+          <tr>
+            <th scope="row" class="px-6 py-4 font-mono font-medium text-white">EU AI Act</th>
+            <td class="px-6 py-4 text-ink-300">Traceability and record-keeping for AI systems</td>
+            <td class="px-6 py-4 text-ink-300">A record for every call, with agent, action, model, decision and the policy that took it</td>
+          </tr>
+          <tr>
+            <th scope="row" class="px-6 py-4 font-mono font-medium text-white">DORA</th>
+            <td class="px-6 py-4 text-ink-300">Monitoring, anomaly detection, incident reconstruction</td>
+            <td class="px-6 py-4 text-ink-300">Timing for each stage and each tool call, and the ordered trace of every session</td>
+          </tr>
+          <tr>
+            <th scope="row" class="px-6 py-4 font-mono font-medium text-white">GDPR</th>
+            <td class="px-6 py-4 text-ink-300">Data minimisation, control over where data is processed</td>
+            <td class="px-6 py-4 text-ink-300">Traces without content, self-hosting or EU hosting, no traffic decryption</td>
+          </tr>
+          <tr>
+            <th scope="row" class="px-6 py-4 font-mono font-medium text-white">ACPR · SOC 2</th>
+            <td class="px-6 py-4 text-ink-300">Access control and a log of external calls</td>
+            <td class="px-6 py-4 text-ink-300">Authenticated agent identities, policy decisions and an audit log that includes denied calls</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="border-t border-ink-700 px-6 py-3 text-xs text-ink-500">
+        AgentKeeper supplies evidence and controls. It does not make a system compliant by itself; compliance is still a property of your whole organisation.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── Positioning ───────────────────────── -->
+<section class="border-b border-ink-800 bg-ink-900/40">
+  <div class="mx-auto grid grid-cols-1 max-w-6xl gap-14 px-4 py-24 sm:px-6 lg:grid-cols-2">
+    <div>
+      <p class="eyebrow">07 — Why AgentKeeper</p>
+      <h2 class="section-title">Security is the product, not the upsell.</h2>
+      <ol class="mt-10 space-y-8">
+        <li class="flex gap-5">
+          <span class="w-8 shrink-0 font-mono text-sm text-keeper-400">i.</span>
+          <div>
+            <h3 class="font-semibold text-white">Governs actions, not only model calls</h3>
+            <p class="mt-2 text-sm/6 text-ink-300">LLM gateways control access to the model: routing, spend and rate limits. AgentKeeper also sees what the agent does with the tools, files and credentials it has been given.</p>
+          </div>
+        </li>
+        <li class="flex gap-5">
+          <span class="w-8 shrink-0 font-mono text-sm text-keeper-400">ii.</span>
+          <div>
+            <h3 class="font-semibold text-white">Designed for compliance from the start</h3>
+            <p class="mt-2 text-sm/6 text-ink-300">Audit trails and controls are designed around healthcare, legal and financial requirements. They are part of the core, not a set of third-party plugins.</p>
+          </div>
+        </li>
+        <li class="flex gap-5">
+          <span class="w-8 shrink-0 font-mono text-sm text-keeper-400">iii.</span>
+          <div>
+            <h3 class="font-semibold text-white">No paywall on safety</h3>
+            <p class="mt-2 text-sm/6 text-ink-300">Many tools offer a free, ungoverned base and charge for audit logs and PII controls. For a security buyer that is the wrong way round, so these are included.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+    <div class="panel self-start p-7">
+      <h3 class="font-mono text-xs tracking-widest text-ink-400 uppercase">What AgentKeeper is not</h3>
+      <dl class="mt-6 divide-y divide-ink-800 text-sm">
+        <div class="flex justify-between gap-6 py-3"><dt class="text-ink-100">A multi-provider LLM router</dt><dd class="text-right font-mono text-xs text-ink-500">see LiteLLM, OpenRouter</dd></div>
+        <div class="flex justify-between gap-6 py-3"><dt class="text-ink-100">A sandbox</dt><dd class="text-right font-mono text-xs text-ink-500">use Docker, gVisor, Firecracker</dd></div>
+        <div class="flex justify-between gap-6 py-3"><dt class="text-ink-100">A firewall or service mesh</dt><dd class="text-right font-mono text-xs text-ink-500">network isolation is the sandbox's job</dd></div>
+        <div class="flex justify-between gap-6 py-3"><dt class="text-ink-100">A secret manager</dt><dd class="text-right font-mono text-xs text-ink-500">keep your vault; we read env vars</dd></div>
+        <div class="flex justify-between gap-6 py-3"><dt class="text-ink-100">A cost optimiser</dt><dd class="text-right font-mono text-xs text-ink-500">we govern; we don't route</dd></div>
+      </dl>
+      <p class="mt-6 text-xs/5 text-ink-500">
+        Being explicit about scope matters. A governance tool that claims to do everything is harder to audit and to trust.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── Roadmap ───────────────────────── -->
+<section id="roadmap" class="border-b border-ink-800">
+  <div class="mx-auto max-w-6xl px-4 py-24 sm:px-6">
+    <p class="eyebrow">08 — Roadmap</p>
+    <h2 class="section-title">Built from specs, one stage at a time.</h2>
+    <p class="section-lead">
+      Each feature starts as a functional and a technical spec, then gets tests, then an implementation, with a human
+      review between each step. This is where things stand now.
+    </p>
+
+    <div class="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-3">
+      <div class="panel p-7">
+        <div class="flex items-baseline justify-between">
+          <h3 class="font-semibold text-white">Phase 1 · Core</h3>
+          <span class="font-mono text-xs text-keeper-400">in progress</span>
+        </div>
+        <ul class="mt-6 space-y-2.5 font-mono text-[13px]">
+          <li class="flex gap-2.5 text-ink-100"><span class="text-allow">[x]</span> HTTP proxy, streaming</li>
+          <li class="flex gap-2.5 text-ink-100"><span class="text-allow">[x]</span> staging pipeline, fail-closed</li>
+          <li class="flex gap-2.5 text-ink-100"><span class="text-allow">[x]</span> agent identification (key / JWT)</li>
+          <li class="flex gap-2.5 text-ink-100"><span class="text-allow">[x]</span> call and tool-call tracing</li>
+          <li class="flex gap-2.5 text-ink-100"><span class="text-allow">[x]</span> provider credential injection</li>
+          <li class="flex gap-2.5 text-ink-400"><span class="text-ink-500">[ ]</span> OPA/Rego policy engine</li>
+          <li class="flex gap-2.5 text-ink-400"><span class="text-ink-500">[ ]</span> per-agent, per-model rate limits</li>
+        </ul>
+      </div>
+      <div class="panel p-7">
+        <div class="flex items-baseline justify-between">
+          <h3 class="font-semibold text-white">Phase 2 · Enterprise</h3>
+          <span class="font-mono text-xs text-ink-500">next</span>
+        </div>
+        <ul class="mt-6 space-y-2.5 font-mono text-[13px] text-ink-400">
+          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> PII and secret scanning</li>
+          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> prompt-injection detection</li>
+          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> platform: live records, agent map</li>
+          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> platform: session traces</li>
+          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> anomaly detection</li>
+          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> policy versioning and rollback</li>
+          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> multi-tenant isolation</li>
+        </ul>
+      </div>
+      <div class="panel p-7">
+        <div class="flex items-baseline justify-between">
+          <h3 class="font-semibold text-white">Phase 3 · Compliance</h3>
+          <span class="font-mono text-xs text-ink-500">later</span>
+        </div>
+        <ul class="mt-6 space-y-2.5 font-mono text-[13px] text-ink-400">
+          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> AI Act / DORA / SOC 2 exports</li>
+          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> signed, tamper-evident audit logs</li>
+          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> policy sign-off workflow</li>
+          <li class="flex gap-2.5"><span class="text-ink-500">[ ]</span> compliance platform integrations</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── Pilot / CTA ───────────────────────── -->
+<section id="pilot" class="relative overflow-hidden">
+  <div class="grid-bg pointer-events-none absolute inset-0 rotate-180" aria-hidden="true"></div>
+  <div class="relative mx-auto grid grid-cols-1 max-w-6xl gap-14 px-4 py-24 sm:px-6 lg:grid-cols-2">
+    <div>
+      <p class="eyebrow">09 — Work with us</p>
+      <h2 class="section-title">What do you need to see before you give an agent production credentials?</h2>
+      <p class="section-lead">We are looking for a small number of design partners in healthcare, legal, finance and software.</p>
+      <div class="mt-10 space-y-5">
+        <div class="flex gap-4">
+          <span class="mt-1 font-mono text-sm text-keeper-400">→</span>
+          <div>
+            <h3 class="font-semibold text-white">30-day pilot</h3>
+            <p class="mt-1 text-sm/6 text-ink-300">One agent, one workflow, deployed on your infrastructure. You get a complete trace of what that agent does.</p>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <span class="mt-1 font-mono text-sm text-keeper-400">→</span>
+          <div>
+            <h3 class="font-semibold text-white">Professional services</h3>
+            <p class="mt-1 text-sm/6 text-ink-300">Integration, policy design and rollout support, fitted to your stack and your compliance requirements.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel p-7">
+      <form hx-post="/api/pilot" hx-target="#pilot-result" hx-swap="innerHTML" hx-disabled-elt="find button"
+            class="space-y-5" id="pilot-form">
+        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+          <label class="block text-sm text-ink-200">Name
+            <input name="name" required autocomplete="name" class="field">
+          </label>
+          <label class="block text-sm text-ink-200">Work email
+            <input name="email" type="email" required autocomplete="email" class="field" placeholder="you@company.eu">
+          </label>
+        </div>
+        <label class="block text-sm text-ink-200">Organisation
+          <input name="organisation" required autocomplete="organization" class="field">
+        </label>
+        <label class="block text-sm text-ink-200">Sector
+          <select name="sector" class="field">
+            <option>Healthcare</option>
+            <option>Legal</option>
+            <option>Finance / insurance</option>
+            <option>Software</option>
+            <option>Public sector</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label class="block text-sm text-ink-200">Which agents would you put behind AgentKeeper?
+          <textarea name="context" rows="3" class="field" placeholder="e.g. Claude Code across 40 engineers, with access to our monorepo"></textarea>
+        </label>
+        <div class="flex flex-wrap items-center justify-between gap-4 pt-1">
+          <p class="max-w-xs text-xs/5 text-ink-500">We use this only to reply to you. No newsletter, no resale.</p>
+          <button type="submit" class="btn-primary disabled:opacity-60">
+            Request a pilot
+            <span class="htmx-indicator font-mono text-xs">…</span>
+          </button>
+        </div>
+        <div id="pilot-result" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ───────────────────────── Footer ───────────────────────── -->
+<footer class="border-t border-ink-800 bg-ink-950">
+  <div class="mx-auto flex max-w-6xl flex-col gap-8 px-4 py-12 sm:px-6 md:flex-row md:items-start md:justify-between">
+    <div class="max-w-sm">
+      <div class="flex items-center gap-2.5">
+        <img src="assets/logo.svg" alt="" class="size-6">
+        <span class="font-semibold text-white">AgentKeeper</span>
+      </div>
+      <p class="mt-4 text-sm/6 text-ink-400">Security, privacy and observability for AI agents. Built in Europe.</p>
+    </div>
+    <div class="grid grid-cols-2 gap-10 text-sm sm:grid-cols-3">
+      <div>
+        <p class="font-mono text-xs text-ink-500">product</p>
+        <ul class="mt-3 space-y-2 text-ink-300">
+          <li><a href="#pipeline" class="hover:text-white">Pipeline</a></li>
+          <li><a href="#platform" class="hover:text-white">Platform</a></li>
+          <li><a href="#traces" class="hover:text-white">Session traces</a></li>
+          <li><a href="#roadmap" class="hover:text-white">Roadmap</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="font-mono text-xs text-ink-500">trust</p>
+        <ul class="mt-3 space-y-2 text-ink-300">
+          <li><a href="#sovereignty" class="hover:text-white">Sovereignty</a></li>
+          <li><a href="#sovereignty" class="hover:text-white">Compliance</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="font-mono text-xs text-ink-500">contact</p>
+        <ul class="mt-3 space-y-2 text-ink-300">
+          <li><a href="#pilot" class="hover:text-white">Request a pilot</a></li>
+          <li><a href="mailto:hello@agentkeeper.eu" class="hover:text-white">hello@agentkeeper.eu</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-ink-800">
+    <div class="mx-auto flex max-w-6xl flex-wrap justify-between gap-3 px-4 py-5 font-mono text-[11px] text-ink-500 sm:px-6">
+      <span>© 2026 AgentKeeper</span>
+      <span>no cookies · no trackers · no third-party requests</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
