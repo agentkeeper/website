@@ -1,3 +1,45 @@
+// ───────────────────── Theme toggle ─────────────────────
+// Three states: light · system · dark. "system" follows prefers-color-scheme.
+(() => {
+  const group = document.getElementById("theme-toggle");
+  if (!group) return;
+  const radios = [...group.querySelectorAll('[role="radio"]')];
+  const META = { light: "#f5f7fa", dark: "#1e293b" };
+  const metas = [...document.querySelectorAll('meta[name="theme-color"]')];
+  const originals = metas.map((m) => m.content);
+
+  function apply(mode, save) {
+    const root = document.documentElement;
+    if (mode === "system") delete root.dataset.theme; else root.dataset.theme = mode;
+    metas.forEach((m, i) => (m.content = mode === "system" ? originals[i] : META[mode]));
+    group.dataset.mode = mode;
+    radios.forEach((r) => {
+      const on = r.dataset.mode === mode;
+      r.setAttribute("aria-checked", String(on));
+      r.tabIndex = on ? 0 : -1;
+    });
+    if (save) try { mode === "system" ? localStorage.removeItem("ak-theme") : localStorage.setItem("ak-theme", mode); } catch {}
+  }
+
+  let initial = "system";
+  try { initial = localStorage.getItem("ak-theme") || "system"; } catch {}
+  apply(["light", "system", "dark"].includes(initial) ? initial : "system", false);
+
+  group.addEventListener("click", (e) => {
+    const r = e.target.closest('[role="radio"]');
+    if (r) apply(r.dataset.mode, true);
+  });
+  group.addEventListener("keydown", (e) => {
+    const step = { ArrowLeft: -1, ArrowUp: -1, ArrowRight: 1, ArrowDown: 1 }[e.key];
+    if (!step) return;
+    e.preventDefault();
+    const i = radios.findIndex((r) => r.getAttribute("aria-checked") === "true");
+    const next = radios[(i + step + radios.length) % radios.length];
+    apply(next.dataset.mode, true);
+    next.focus();
+  });
+})();
+
 // Tabs: HTMX loads the panel; this keeps aria-selected in sync.
 document.addEventListener("htmx:beforeRequest", (e) => {
   const tab = e.detail.elt;
@@ -113,7 +155,7 @@ function detailHTML(r) {
   return `<div class="font-mono text-[11px]">
     <div class="flex items-center justify-between"><span class="text-ink-500">${r.record}</span>
       <span class="${isDenied(r) ? "text-deny" : "text-allow"}">${isDenied(r) ? "denied" : r.outcome.result}</span></div>
-    <p class="mt-1 truncate text-[13px] text-white">${r.call_id}</p>
+    <p class="mt-1 truncate text-[13px] text-ink-50">${r.call_id}</p>
     ${reason}
     <dl class="mt-4 divide-y divide-ink-800">
       ${row("agent", r.agent_id ?? '<span class="text-deny">unknown</span>')}
@@ -206,8 +248,8 @@ function initLiveRecords(root) {
 // ───────────────────── Platform preview: honeycomb host map ─────────────────────
 
 const HEX_SCALES = {
-  activity: { steps: [[0, "#3d4b60"], [1, "#134e4a"], [40, "#17766c"], [90, "#1fae9c"], [150, "#2dd4bf"]], key: "calls", label: ["idle", "busy"] },
-  denials:  { steps: [[0, "#3d4b60"], [1, "#5b1f24"], [3, "#9b2c2c"], [6, "#dc4a4a"], [10, "#f87171"]], key: "denied", label: ["0", "10+"] },
+  activity: { steps: [[0, "var(--hx-a0)"], [1, "var(--hx-a1)"], [40, "var(--hx-a2)"], [90, "var(--hx-a3)"], [150, "var(--hx-a4)"]], key: "calls", label: ["idle", "busy"] },
+  denials:  { steps: [[0, "var(--hx-a0)"], [1, "var(--hx-d1)"], [3, "var(--hx-d2)"], [6, "var(--hx-d3)"], [10, "var(--hx-d4)"]], key: "denied", label: ["0", "10+"] },
 };
 const hexColor = (scale, v) => scale.steps.reduce((c, [min, col]) => (v >= min ? col : c), scale.steps[0][1]);
 
@@ -222,8 +264,8 @@ function initHexmap(root) {
     const scale = HEX_SCALES[mode];
     hexes.forEach((el) => {
       const h = hosts[el.dataset.i];
-      el.style.fill = h.unknown ? (mode === "denials" ? hexColor(scale, h.denied) : "#4a2c36") : hexColor(scale, h[scale.key]);
-      el.style.stroke = h.unknown ? "#f87171" : h.denied && mode === "activity" ? "#f87171" : "transparent";
+      el.style.fill = h.unknown ? (mode === "denials" ? hexColor(scale, h.denied) : "var(--color-deny-bg)") : hexColor(scale, h[scale.key]);
+      el.style.stroke = h.unknown || (h.denied && mode === "activity") ? "var(--color-deny)" : "transparent";
     });
     legend.innerHTML = `<span>${scale.label[0]}</span>${scale.steps.map(([, c]) => `<span class="inline-block h-2 w-4 rounded-sm" style="background:${c}"></span>`).join("")}<span>${scale.label[1]}</span>`
       + (mode === "activity" ? `<span class="ml-3 inline-block size-2.5 rounded-sm border border-deny"></span><span>has denials</span>` : "");
@@ -239,7 +281,7 @@ function initHexmap(root) {
     detail.innerHTML = `
       <div class="flex items-center justify-between"><span class="text-ink-500">host</span>
         <span class="${h.unknown ? "text-deny" : h.denied ? "text-alert" : "text-allow"}">${h.unknown ? "unknown" : h.denied ? "attention" : "healthy"}</span></div>
-      <p class="mt-1 text-[13px] text-white">${h.host}</p>
+      <p class="mt-1 text-[13px] text-ink-50">${h.host}</p>
       ${h.reason ? `<div class="mt-4 rounded border border-deny/30 bg-deny/10 p-2.5"><p class="text-[10px] tracking-widest text-deny uppercase">last denial</p><p class="mt-1 text-ink-100">${h.reason}</p></div>` : ""}
       <dl class="mt-4 divide-y divide-ink-800">
         ${row("group", h.group)}${row("environment", h.env)}${row("gateway", h.gw)}

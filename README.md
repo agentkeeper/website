@@ -35,6 +35,15 @@ Fonts (Inter, JetBrains Mono) and htmx are vendored from npm into `public/assets
 The page loads nothing from third-party origins and sets no cookies. Keep it that way:
 no Google Fonts, CDNs or analytics snippets.
 
+## Themes
+
+The page follows the system setting (dark by default, light under `prefers-color-scheme: light`).
+A three-state toggle in the header (light · system · dark) overrides it via `html[data-theme]`;
+the choice is kept in `localStorage` (`ak-theme`) and applied by an inline script before first paint.
+All colours are tokens in `src/input.css`; the light values live in one `@media` block there.
+SVG diagrams use hex colours in their markup, and CSS rules in the same file map each hex to a
+token so they switch too. Headings use `text-ink-50`, not `text-white`, for the same reason.
+
 ## Hero animation
 
 The *how it works* diagram is an inline SVG in `index.html`, animated by `initFlow` in `site.js`.

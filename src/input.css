@@ -30,6 +30,7 @@
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Surfaces, derived from the logo's slate (#1c2530). */
+  --color-ink-50: #ffffff;
   --color-ink-950: #1e293b;
   --color-ink-900: #243044;
   --color-ink-850: #2a374b;
@@ -53,20 +54,22 @@
   --color-allow: #4ade80;
   --color-deny: #f87171;
   --color-alert: #fbbf24;
+  --color-deny-soft: #fca5a5;
+  --color-deny-bg: #4a2c36;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 5rem;
-    color-scheme: dark;
+    color-scheme: light dark;
   }
   body {
     @apply bg-ink-950 font-sans text-ink-200 antialiased;
     font-feature-settings: "cv11", "ss01";
   }
   ::selection {
-    @apply bg-keeper-400/30 text-white;
+    @apply bg-keeper-400/30 text-ink-50;
   }
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-keeper-400;
@@ -78,7 +81,7 @@
     @apply font-mono text-xs tracking-widest text-keeper-400 uppercase;
   }
   .section-title {
-    @apply mt-4 text-3xl font-semibold tracking-tight text-white text-balance sm:text-4xl;
+    @apply mt-4 text-3xl font-semibold tracking-tight text-ink-50 text-balance sm:text-4xl;
   }
   .section-lead {
     @apply mt-5 max-w-2xl text-lg/8 text-ink-300 text-pretty;
@@ -108,19 +111,34 @@
     @apply cursor-pointer border-b-2 border-transparent px-3 py-2.5 font-mono text-xs text-ink-400 transition hover:text-ink-100;
   }
   .tab[aria-selected="true"] {
-    @apply border-keeper-400 text-white;
+    @apply border-keeper-400 text-ink-50;
   }
   .field {
-    @apply mt-2 block w-full rounded-md border border-ink-600 bg-ink-950 px-3 py-2 text-sm text-white placeholder:text-ink-500 focus:border-keeper-400 focus:outline-none;
+    @apply mt-2 block w-full rounded-md border border-ink-600 bg-ink-950 px-3 py-2 text-sm text-ink-50 placeholder:text-ink-500 focus:border-keeper-400 focus:outline-none;
   }
 
+
+  /* Three-state theme toggle: light · system · dark, with a sliding thumb. */
+  .theme-toggle {
+    @apply relative inline-flex items-center rounded-full border border-ink-700 bg-ink-900 p-0.5;
+  }
+  .theme-toggle button {
+    @apply relative z-10 grid size-7 place-items-center rounded-full text-ink-500 transition-colors hover:text-ink-100;
+  }
+  .theme-toggle button[aria-checked="true"] { @apply text-ink-50; }
+  .theme-toggle svg { @apply size-3.5; }
+  .theme-thumb {
+    @apply absolute top-0.5 left-0.5 size-7 rounded-full border border-ink-600 bg-ink-800 shadow-sm transition-transform duration-200 ease-out;
+  }
+  .theme-toggle[data-mode="system"] .theme-thumb { transform: translateX(1.75rem); }
+  .theme-toggle[data-mode="dark"] .theme-thumb { transform: translateX(3.5rem); }
 
   /* Platform preview */
   .app-nav {
-    @apply flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left text-ink-300 transition hover:bg-ink-800 hover:text-white;
+    @apply flex w-full items-center gap-2.5 rounded-md px-2 py-1.5 text-left text-ink-300 transition hover:bg-ink-800 hover:text-ink-50;
   }
   .app-nav[aria-selected="true"] {
-    @apply bg-ink-800 text-white;
+    @apply bg-ink-800 text-ink-50;
   }
   .agent-chip {
     @apply rounded-full border border-ink-700 px-2.5 py-1 text-ink-500 transition hover:border-ink-500;
@@ -133,7 +151,7 @@
   }
   .rec-filter:first-child { @apply pl-0; }
   .rec-filter[aria-selected="true"] {
-    @apply border-keeper-400 text-white;
+    @apply border-keeper-400 text-ink-50;
   }
   .rec-filter span[data-count] {
     @apply ml-1 rounded bg-ink-800 px-1.5 py-px text-ink-300;
@@ -156,11 +174,124 @@
   .tk-p { @apply text-keeper-400; }  /* prompt */
 }
 
+
+/* ─── Themes ───
+   Dark is the default. Light follows the system setting, unless the theme
+   button forces one via html[data-theme]. Tokens flip here;
+   Tailwind utilities and the SVG colour mapping below pick them up. */
+:root {
+  --grid-line: rgb(255 255 255 / 0.05);
+  --hx-a0: #3d4b60; --hx-a1: #134e4a; --hx-a2: #17766c; --hx-a3: #1fae9c; --hx-a4: #2dd4bf;
+  --hx-d1: #5b1f24; --hx-d2: #9b2c2c; --hx-d3: #dc4a4a; --hx-d4: #f87171;
+  --hx-lbl: rgb(255 255 255 / 0.6);
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --color-ink-50: #0b1220;
+    --color-ink-100: #0f172a;
+    --color-ink-200: #1e293b;
+    --color-ink-300: #3b4a60;
+    --color-ink-400: #4f5f76;
+    --color-ink-500: #64748b;
+    --color-ink-600: #a3b1c2;
+    --color-ink-700: #d6dee8;
+    --color-ink-800: #e6ebf1;
+    --color-ink-850: #eff3f7;
+    --color-ink-900: #ffffff;
+    --color-ink-950: #f5f7fa;
+    --color-keeper-300: #0f766e;
+    --color-keeper-400: #0d9488;
+    --color-keeper-500: #14b8a6;
+    --color-keeper-700: #5eead4;
+    --color-keeper-900: #ccfbf1;
+    --color-allow: #15803d;
+    --color-deny: #dc2626;
+    --color-alert: #b45309;
+    --color-deny-soft: #b91c1c;
+    --color-deny-bg: #fee2e2;
+    --grid-line: rgb(15 23 42 / 0.05);
+    --hx-a0: #e2e8f0; --hx-a1: #ccfbf1; --hx-a2: #5eead4; --hx-a3: #14b8a6; --hx-a4: #0d9488;
+    --hx-d1: #fecaca; --hx-d2: #f87171; --hx-d3: #dc2626; --hx-d4: #991b1b;
+    --hx-lbl: rgb(15 23 42 / 0.55);
+  }
+}
+/* Explicit choice from the theme button; same values as the block above. */
+:root[data-theme="light"] {
+  --color-ink-50: #0b1220;
+  --color-ink-100: #0f172a;
+  --color-ink-200: #1e293b;
+  --color-ink-300: #3b4a60;
+  --color-ink-400: #4f5f76;
+  --color-ink-500: #64748b;
+  --color-ink-600: #a3b1c2;
+  --color-ink-700: #d6dee8;
+  --color-ink-800: #e6ebf1;
+  --color-ink-850: #eff3f7;
+  --color-ink-900: #ffffff;
+  --color-ink-950: #f5f7fa;
+  --color-keeper-300: #0f766e;
+  --color-keeper-400: #0d9488;
+  --color-keeper-500: #14b8a6;
+  --color-keeper-700: #5eead4;
+  --color-keeper-900: #ccfbf1;
+  --color-allow: #15803d;
+  --color-deny: #dc2626;
+  --color-alert: #b45309;
+  --color-deny-soft: #b91c1c;
+  --color-deny-bg: #fee2e2;
+  --grid-line: rgb(15 23 42 / 0.05);
+  --hx-a0: #e2e8f0; --hx-a1: #ccfbf1; --hx-a2: #5eead4; --hx-a3: #14b8a6; --hx-a4: #0d9488;
+  --hx-d1: #fecaca; --hx-d2: #f87171; --hx-d3: #dc2626; --hx-d4: #991b1b;
+  --hx-lbl: rgb(15 23 42 / 0.55);
+}
+:root[data-theme="light"] { color-scheme: light; }
+:root[data-theme="dark"] { color-scheme: dark; }
+
+/* Hard-coded SVG colours (diagram, map, log lines) follow the theme tokens. */
+svg [fill="#eef2f6" i] { fill: var(--color-ink-100); }
+svg [stroke="#eef2f6" i] { stroke: var(--color-ink-100); }
+svg [fill="#7c8aa0" i] { fill: var(--color-ink-500); }
+svg [stroke="#7c8aa0" i] { stroke: var(--color-ink-500); }
+svg [fill="#f87171" i] { fill: var(--color-deny); }
+svg [stroke="#f87171" i] { stroke: var(--color-deny); }
+svg [fill="#4b5a70" i] { fill: var(--color-ink-600); }
+svg [stroke="#4b5a70" i] { stroke: var(--color-ink-600); }
+svg [fill="#9aa7b8" i] { fill: var(--color-ink-400); }
+svg [stroke="#9aa7b8" i] { stroke: var(--color-ink-400); }
+svg [fill="#4ade80" i] { fill: var(--color-allow); }
+svg [stroke="#4ade80" i] { stroke: var(--color-allow); }
+svg [fill="#c3ccd8" i] { fill: var(--color-ink-300); }
+svg [stroke="#c3ccd8" i] { stroke: var(--color-ink-300); }
+svg [fill="#243044" i] { fill: var(--color-ink-900); }
+svg [stroke="#243044" i] { stroke: var(--color-ink-900); }
+svg [fill="#2dd4bf" i] { fill: var(--color-keeper-400); }
+svg [stroke="#2dd4bf" i] { stroke: var(--color-keeper-400); }
+svg [fill="#2a374b" i] { fill: var(--color-ink-850); }
+svg [stroke="#2a374b" i] { stroke: var(--color-ink-850); }
+svg [fill="#17766c" i] { fill: var(--color-keeper-700); }
+svg [stroke="#17766c" i] { stroke: var(--color-keeper-700); }
+svg [fill="#3d4b60" i] { fill: var(--color-ink-700); }
+svg [stroke="#3d4b60" i] { stroke: var(--color-ink-700); }
+svg [fill="#134e4a" i] { fill: var(--color-keeper-900); }
+svg [stroke="#134e4a" i] { stroke: var(--color-keeper-900); }
+svg [fill="#ffffff" i] { fill: var(--color-ink-50); }
+svg [stroke="#ffffff" i] { stroke: var(--color-ink-50); }
+svg [fill="#fca5a5" i] { fill: var(--color-deny-soft); }
+svg [stroke="#fca5a5" i] { stroke: var(--color-deny-soft); }
+svg [fill="#7ee8d8" i] { fill: var(--color-keeper-300); }
+svg [stroke="#7ee8d8" i] { stroke: var(--color-keeper-300); }
+svg [fill="#4a2c36" i] { fill: var(--color-deny-bg); }
+svg [stroke="#4a2c36" i] { stroke: var(--color-deny-bg); }
+svg [fill="#3b2a35" i] { fill: var(--color-deny-bg); }
+svg [stroke="#3b2a35" i] { stroke: var(--color-deny-bg); }
+svg [fill="#1fae9c" i] { fill: var(--color-keeper-500); }
+svg [stroke="#1fae9c" i] { stroke: var(--color-keeper-500); }
+
 /* A faint engineering grid behind the hero. */
 .grid-bg {
   background-image:
-    linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 40%, transparent 100%);
 }
@@ -186,18 +317,18 @@
 
 /* Honeycomb host map */
 .hx { cursor: pointer; stroke-width: 1.4; transition: fill 250ms, transform 150ms; transform-box: fill-box; transform-origin: center; }
-.hx:hover, .hx:focus-visible { outline: none; transform: scale(1.12); stroke: #ffffff !important; }
-.hx.is-selected { stroke: #ffffff !important; stroke-width: 2; }
-.hx-lbl { fill: rgb(255 255 255 / 0.55); pointer-events: none; }
-.hx-cell:hover .hx-lbl { fill: #ffffff; }
+.hx:hover, .hx:focus-visible { outline: none; transform: scale(1.12); stroke: var(--color-ink-50) !important; }
+.hx.is-selected { stroke: var(--color-ink-50) !important; stroke-width: 2; }
+.hx-lbl { fill: var(--hx-lbl); pointer-events: none; }
+.hx-cell:hover .hx-lbl { fill: var(--color-ink-50); }
 
 /* Hero flow diagram */
 .fl-cell rect { fill: transparent; stroke: transparent; transition: fill 150ms, stroke 150ms; }
 .fl-cell .fl-x { fill: transparent; pointer-events: none; }
-.fl-cell.deny rect { fill: #4a2c36; stroke: #f87171; }
-.fl-cell.deny .fl-x { fill: #fca5a5; }
+.fl-cell.deny rect { fill: var(--color-deny-bg); stroke: var(--color-deny); }
+.fl-cell.deny .fl-x { fill: var(--color-deny-soft); }
 .fl-node rect { transition: stroke 200ms, fill 200ms; }
-.fl-node.is-active rect { stroke: #2dd4bf; }
+.fl-node.is-active rect { stroke: var(--color-keeper-400) !important; }
 #fl-flag { transition: opacity 200ms; }
 .fl-die { animation: fl-die 1.2s ease-out forwards; }
 @keyframes fl-die { 0%, 40% { opacity: 1; } 100% { opacity: 0; } }
