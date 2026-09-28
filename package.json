@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "AgentKeeper landing page — static, Tailwind CSS + HTMX",
   "scripts": {
-    "vendor": "cp node_modules/htmx.org/dist/htmx.min.js public/assets/js/ && cp node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2 node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2 node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2 public/assets/fonts/",
+    "vendor": "mkdir -p public/assets/fonts public/assets/js && cp node_modules/htmx.org/dist/htmx.min.js public/assets/js/ && cp node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2 node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-400-normal.woff2 node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2 public/assets/fonts/",
     "build": "npm run vendor && tailwindcss -i src/input.css -o public/assets/css/site.css --minify",
     "watch": "tailwindcss -i src/input.css -o public/assets/css/site.css --watch",
     "serve": "python3 -m http.server 4173 -d public",
