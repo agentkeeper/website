@@ -931,8 +931,34 @@
                   <span class="size-2.5 rounded-full bg-ink-600"></span>
                   <span class="size-2.5 rounded-full bg-ink-600"></span>
                 </div>
+                <nav
+                  role="tablist"
+                  aria-label="Platform views"
+                  class="flex gap-1 text-[13px]"
+                >
+                  <button
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="app-view"
+                    class="app-nav w-auto py-1"
+                    hx-get="partials/app-explorer.html"
+                    hx-target="#app-view"
+                  >
+                    Explorer
+                  </button>
+                  <button
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="app-view"
+                    class="app-nav w-auto py-1"
+                    hx-get="partials/app-map.html"
+                    hx-target="#app-view"
+                  >
+                    Map
+                  </button>
+                </nav>
                 <div
-                  class="mx-auto flex items-center gap-2 rounded bg-ink-950 px-3 py-1 font-mono text-[11px] text-ink-400"
+                  class="mx-auto hidden items-center gap-2 rounded bg-ink-950 px-3 py-1 font-mono text-[11px] text-ink-400 sm:flex"
                 >
                   <svg
                     viewBox="0 0 16 16"
@@ -951,83 +977,15 @@
                 >
               </div>
 
-              <div class="overflow-x-auto">
-                <div class="flex min-w-[1180px]">
-                  <!-- app sidebar: HTMX swaps the view -->
-                  <aside
-                    class="w-48 shrink-0 border-r border-ink-700 bg-ink-900 p-3"
-                  >
-                    <div class="flex items-center gap-2 px-2 py-1.5">
-                      <img src="assets/logo.svg" alt="" class="size-5" />
-                      <span class="text-sm font-semibold text-ink-50"
-                        >Cardea</span
-                      >
-                    </div>
-                    <p
-                      class="mt-5 px-2 font-mono text-[10px] tracking-widest text-ink-500 uppercase"
-                    >
-                      Observe
-                    </p>
-                    <nav
-                      role="tablist"
-                      aria-label="Platform views"
-                      class="mt-2 space-y-0.5 text-[13px]"
-                    >
-                      <button
-                        role="tab"
-                        aria-selected="true"
-                        class="app-nav"
-                        hx-get="partials/app-records.html"
-                        hx-target="#app-view"
-                      >
-                        <span class="size-1.5 rounded-full bg-allow"></span>
-                        Live records
-                      </button>
-                      <button
-                        role="tab"
-                        aria-selected="false"
-                        class="app-nav"
-                        hx-get="partials/app-map.html"
-                        hx-target="#app-view"
-                      >
-                        <span
-                          class="size-1.5 rounded-full bg-keeper-400"
-                        ></span>
-                        Agent map
-                      </button>
-                    </nav>
-                    <p
-                      class="mt-5 px-2 font-mono text-[10px] tracking-widest text-ink-500 uppercase"
-                    >
-                      Govern
-                    </p>
-                    <ul class="mt-2 space-y-0.5 text-[13px] text-ink-500">
-                      <li class="px-2 py-1.5">Agents</li>
-                      <li class="px-2 py-1.5">Policies</li>
-                      <li class="px-2 py-1.5">Audit exports</li>
-                    </ul>
-                    <div
-                      class="mt-8 rounded-md border border-ink-700 bg-ink-950 p-2.5 font-mono text-[10px]/4 text-ink-400"
-                    >
-                      <div class="flex items-center gap-1.5 text-ink-200">
-                        <span class="size-1.5 rounded-full bg-allow"></span>2
-                        gateways online
-                      </div>
-                      <div class="mt-1">region eu-west · data in EU</div>
-                    </div>
-                  </aside>
-
-                  <!-- view -->
-                  <div
-                    id="app-view"
-                    data-panel
-                    class="min-h-[560px] flex-1 bg-ink-950"
-                    hx-get="partials/app-records.html"
-                    hx-trigger="load"
-                  >
-                    <p class="p-6 font-mono text-xs text-ink-500">Loading…</p>
-                  </div>
-                </div>
+              <!-- view: HTMX swaps the screenshot -->
+              <div id="app-view" data-panel class="bg-[#16152a]">
+                <img
+                  src="assets/screens/explorer.webp"
+                  width="1440"
+                  height="900"
+                  alt="The Cardea Explorer: a histogram of blocked, masked and pending events, facets by agent and decision, the event list, and a masked prompt open in the detail panel."
+                  class="block h-auto w-full"
+                />
               </div>
             </div>
             <p class="mt-4 text-center font-mono text-[11px] text-ink-500">
@@ -1055,234 +1013,25 @@
             </p>
           </div>
 
-          <div class="panel mt-12 overflow-hidden">
+          <figure class="mt-12">
             <div
-              class="flex flex-wrap items-center justify-between gap-3 border-b border-ink-700 bg-ink-850 px-5 py-3 font-mono text-[11px]"
+              class="panel overflow-hidden bg-[#16152a] shadow-2xl shadow-black/30 ring-1 ring-ink-50/5"
             >
-              <div class="flex flex-wrap items-center gap-x-4 gap-y-1">
-                <span class="text-ink-50">session 2a1457d7…</span>
-                <span class="text-ink-400"
-                  >agent <span class="text-ink-100">build-bot</span></span
-                >
-                <span class="text-ink-400"
-                  >host <span class="text-ink-100">ci-runner-03</span></span
-                >
-                <span class="text-ink-400"
-                  >4 calls · 3 tool calls · 17.4 s</span
-                >
-              </div>
-              <span class="text-[10px] tracking-widest text-ink-500 uppercase"
-                >sample data</span
-              >
+              <img
+                src="assets/screens/session.webp"
+                width="1440"
+                height="800"
+                loading="lazy"
+                alt="A Cardea session trace: two turns of a claude-code session on one timeline, each prompt, file read and tool call with its decision, ending with a masked prompt and a blocked curl call."
+                class="block h-auto w-full"
+              />
             </div>
-            <div class="overflow-x-auto">
-              <div class="min-w-[860px] font-mono text-[11.5px]">
-                <div
-                  class="grid grid-cols-[250px_1fr_150px] border-b border-ink-800 text-[10px] text-ink-500"
-                >
-                  <div class="px-5 py-2 tracking-wider uppercase">step</div>
-                  <div class="relative py-2">
-                    <span class="absolute -translate-x-1/2" style="left: 0%"
-                      >0s</span
-                    ><span class="absolute -translate-x-1/2" style="left: 25%"
-                      >5s</span
-                    ><span class="absolute -translate-x-1/2" style="left: 50%"
-                      >10s</span
-                    ><span class="absolute -translate-x-1/2" style="left: 75%"
-                      >15s</span
-                    ><span class="absolute -translate-x-1/2" style="left: 100%"
-                      >20s</span
-                    >
-                  </div>
-                  <div class="px-5 py-2 text-right tracking-wider uppercase">
-                    tokens / size
-                  </div>
-                </div>
-                <div class="relative">
-                  <div
-                    class="pointer-events-none absolute inset-y-0 right-[150px] left-[250px]"
-                    aria-hidden="true"
-                  >
-                    <div
-                      class="absolute inset-y-0 border-l border-ink-800/70"
-                      style="left: 0%"
-                    ></div>
-                    <div
-                      class="absolute inset-y-0 border-l border-ink-800/70"
-                      style="left: 25%"
-                    ></div>
-                    <div
-                      class="absolute inset-y-0 border-l border-ink-800/70"
-                      style="left: 50%"
-                    ></div>
-                    <div
-                      class="absolute inset-y-0 border-l border-ink-800/70"
-                      style="left: 75%"
-                    ></div>
-                    <div
-                      class="absolute inset-y-0 border-l border-ink-800/70"
-                      style="left: 100%"
-                    ></div>
-                  </div>
-                  <div
-                    class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850"
-                  >
-                    <div class="truncate px-5 py-2">
-                      <span class="text-keeper-300">LLM</span>
-                      <span class="text-ink-200">claude-opus-5</span>
-                    </div>
-                    <div class="relative h-8">
-                      <div
-                        class="absolute inset-y-1.5 rounded-sm bg-keeper-700/70 ring-1 ring-keeper-500/40"
-                        style="left: 0%; width: 17.5%"
-                      >
-                        <div
-                          class="h-full rounded-l-sm bg-keeper-400/30"
-                          style="width: 40%"
-                        ></div>
-                      </div>
-                    </div>
-                    <div class="px-5 text-right text-ink-400">58.1k → 141</div>
-                  </div>
-                  <div
-                    class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850"
-                  >
-                    <div class="truncate px-5 py-2">
-                      <span class="pl-4 text-ink-500">└</span>
-                      <span class="text-ink-400">tool</span>
-                      <span class="text-ink-100">Read</span>
-                    </div>
-                    <div class="relative h-8">
-                      <div
-                        class="absolute inset-y-2 rounded-sm border border-dashed border-ink-500 bg-ink-800"
-                        style="left: 17.5%; width: 2%"
-                      ></div>
-                    </div>
-                    <div class="px-5 text-right text-ink-400">1.2 kB</div>
-                  </div>
-                  <div
-                    class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850"
-                  >
-                    <div class="truncate px-5 py-2">
-                      <span class="text-keeper-300">LLM</span>
-                      <span class="text-ink-200">claude-opus-5</span>
-                    </div>
-                    <div class="relative h-8">
-                      <div
-                        class="absolute inset-y-1.5 rounded-sm bg-keeper-700/70 ring-1 ring-keeper-500/40"
-                        style="left: 19.5%; width: 21.5%"
-                      >
-                        <div
-                          class="h-full rounded-l-sm bg-keeper-400/30"
-                          style="width: 25.6%"
-                        ></div>
-                      </div>
-                    </div>
-                    <div class="px-5 text-right text-ink-400">59.3k → 212</div>
-                  </div>
-                  <div
-                    class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850"
-                  >
-                    <div class="truncate px-5 py-2">
-                      <span class="pl-4 text-ink-500">└</span>
-                      <span class="text-ink-400">tool</span>
-                      <span class="text-ink-100">Bash</span>
-                    </div>
-                    <div class="relative h-8">
-                      <div
-                        class="absolute inset-y-2 rounded-sm border border-dashed border-ink-500 bg-ink-800"
-                        style="left: 41%; width: 22%"
-                      ></div>
-                    </div>
-                    <div class="px-5 text-right text-ink-400">542 B</div>
-                  </div>
-                  <div
-                    class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850"
-                  >
-                    <div class="truncate px-5 py-2">
-                      <span class="text-keeper-300">LLM</span>
-                      <span class="text-ink-200">claude-opus-5</span>
-                    </div>
-                    <div class="relative h-8">
-                      <div
-                        class="absolute inset-y-1.5 rounded-sm bg-keeper-700/70 ring-1 ring-keeper-500/40"
-                        style="left: 63%; width: 22.5%"
-                      >
-                        <div
-                          class="h-full rounded-l-sm bg-keeper-400/30"
-                          style="width: 35.6%"
-                        ></div>
-                      </div>
-                    </div>
-                    <div class="px-5 text-right text-ink-400">60.1k → 96</div>
-                  </div>
-                  <div
-                    class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850"
-                  >
-                    <div class="truncate px-5 py-2">
-                      <span class="pl-4 text-ink-500">└</span>
-                      <span class="text-ink-400">tool</span>
-                      <span class="text-ink-100">Read</span>
-                    </div>
-                    <div class="relative h-8">
-                      <div
-                        class="absolute inset-y-2 rounded-sm border border-dashed border-ink-500 bg-ink-800"
-                        style="left: 85.5%; width: 1.5%"
-                      ></div>
-                    </div>
-                    <div class="px-5 text-right text-ink-400">311 B</div>
-                  </div>
-                  <div
-                    class="grid grid-cols-[250px_1fr_150px] items-center border-b border-ink-850 bg-deny/[0.05]"
-                  >
-                    <div class="truncate px-5 py-2">
-                      <span class="text-deny">LLM</span>
-                      <span class="text-ink-200">claude-opus-5</span>
-                    </div>
-                    <div class="relative h-8">
-                      <div
-                        class="absolute top-1/2 flex -translate-y-1/2 translate-x-2 flex-row-reverse items-center gap-2"
-                        style="right: 13%"
-                      >
-                        <span
-                          class="grid size-4 place-items-center rounded-full border border-deny bg-ink-950 text-[9px] text-deny"
-                          >✕</span
-                        ><span class="whitespace-nowrap text-deny"
-                          >blocked before reaching the provider · secret in tool
-                          result</span
-                        >
-                      </div>
-                    </div>
-                    <div class="px-5 text-right text-deny">not sent</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-ink-700 px-5 py-3 font-mono text-[10.5px] text-ink-500"
+            <figcaption
+              class="mt-4 text-center font-mono text-[11px] text-ink-500"
             >
-              <span class="flex items-center gap-2"
-                ><span
-                  class="h-2.5 w-5 rounded-sm bg-keeper-700/70 ring-1 ring-keeper-500/40"
-                ></span
-                >model call</span
-              >
-              <span class="flex items-center gap-2"
-                ><span class="h-2.5 w-2 rounded-sm bg-keeper-400/40"></span>time
-                to first byte</span
-              >
-              <span class="flex items-center gap-2"
-                ><span
-                  class="h-2.5 w-5 rounded-sm border border-dashed border-ink-500 bg-ink-800"
-                ></span
-                >tool run by the agent</span
-              >
-              <span class="ml-auto"
-                >What the prompts, arguments and results said is never
-                stored.</span
-              >
-            </div>
-          </div>
+              A session trace in Cardea, shown with sample data.
+            </figcaption>
+          </figure>
 
           <dl
             class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4"

@@ -162,32 +162,6 @@
   .app-nav[aria-selected="true"] {
     @apply bg-ink-800 text-ink-50;
   }
-  .agent-chip {
-    @apply rounded-full border border-ink-700 px-2.5 py-1 text-ink-500 transition hover:border-ink-500;
-  }
-  .agent-chip[aria-pressed="true"] {
-    @apply border-keeper-700 bg-keeper-900/60 text-keeper-300;
-  }
-  .rec-filter {
-    @apply border-b-2 border-transparent px-3 py-2.5 text-ink-400 hover:text-ink-100;
-  }
-  .rec-filter:first-child { @apply pl-0; }
-  .rec-filter[aria-selected="true"] {
-    @apply border-keeper-400 text-ink-50;
-  }
-  .rec-filter span[data-count] {
-    @apply ml-1 rounded bg-ink-800 px-1.5 py-px text-ink-300;
-  }
-  .rec-row {
-    @apply cursor-pointer transition-colors hover:bg-ink-850;
-  }
-  .rec-row[aria-selected="true"] {
-    @apply bg-keeper-900/40;
-  }
-  .rec-row[aria-selected="true"] td:first-child {
-    box-shadow: inset 2px 0 0 var(--color-keeper-400);
-  }
-
   /* Syntax tokens for the hand-highlighted code samples. */
   .tk-k { @apply text-keeper-300; }  /* keys */
   .tk-s { @apply text-ink-100; }     /* strings */
@@ -203,9 +177,6 @@
    Tailwind utilities and the SVG colour mapping below pick them up. */
 :root {
   --grid-line: rgb(255 255 255 / 0.05);
-  --hx-a0: #3d4b60; --hx-a1: #134e4a; --hx-a2: #17766c; --hx-a3: #1fae9c; --hx-a4: #2dd4bf;
-  --hx-d1: #5b1f24; --hx-d2: #9b2c2c; --hx-d3: #dc4a4a; --hx-d4: #f87171;
-  --hx-lbl: rgb(255 255 255 / 0.6);
 }
 @media (prefers-color-scheme: light) {
   :root:not([data-theme="dark"]) {
@@ -232,9 +203,6 @@
     --color-deny-soft: #b91c1c;
     --color-deny-bg: #fee2e2;
     --grid-line: rgb(15 23 42 / 0.05);
-    --hx-a0: #e2e8f0; --hx-a1: #ccfbf1; --hx-a2: #5eead4; --hx-a3: #14b8a6; --hx-a4: #0d9488;
-    --hx-d1: #fecaca; --hx-d2: #f87171; --hx-d3: #dc2626; --hx-d4: #991b1b;
-    --hx-lbl: rgb(15 23 42 / 0.55);
   }
 }
 /* Explicit choice from the theme button; same values as the block above. */
@@ -262,9 +230,6 @@
   --color-deny-soft: #b91c1c;
   --color-deny-bg: #fee2e2;
   --grid-line: rgb(15 23 42 / 0.05);
-  --hx-a0: #e2e8f0; --hx-a1: #ccfbf1; --hx-a2: #5eead4; --hx-a3: #14b8a6; --hx-a4: #0d9488;
-  --hx-d1: #fecaca; --hx-d2: #f87171; --hx-d3: #dc2626; --hx-d4: #991b1b;
-  --hx-lbl: rgb(15 23 42 / 0.55);
 }
 :root[data-theme="light"] { color-scheme: light; }
 :root[data-theme="dark"] { color-scheme: dark; }
@@ -328,21 +293,6 @@ svg [stroke="#1fae9c" i] { stroke: var(--color-keeper-500); }
   html { scroll-behavior: auto; }
   * { transition: none !important; animation: none !important; }
 }
-
-/* New live record: brief teal wash. */
-@keyframes rec-in { from { background-color: rgb(45 212 191 / 0.14); } to { background-color: transparent; } }
-.rec-new { animation: rec-in 1.2s ease-out; }
-@keyframes live-ping { 75%, 100% { transform: scale(2.2); opacity: 0; } }
-.live-ping { animation: live-ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite; }
-.is-paused .live-ping { animation: none; opacity: 0; }
-.is-paused .bg-allow { background-color: var(--color-alert); }
-
-/* Honeycomb host map */
-.hx { cursor: pointer; stroke-width: 1.4; transition: fill 250ms, transform 150ms; transform-box: fill-box; transform-origin: center; }
-.hx:hover, .hx:focus-visible { outline: none; transform: scale(1.12); stroke: var(--color-ink-50) !important; }
-.hx.is-selected { stroke: var(--color-ink-50) !important; stroke-width: 2; }
-.hx-lbl { fill: var(--hx-lbl); pointer-events: none; }
-.hx-cell:hover .hx-lbl { fill: var(--color-ink-50); }
 
 /* Hero flow diagram */
 .fl-cell rect { fill: transparent; stroke: transparent; transition: fill 150ms, stroke 150ms; }
